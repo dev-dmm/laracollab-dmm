@@ -1,16 +1,16 @@
 <x-mail::message>
-# {{ $notifiable->getFirstName() }}, welcome aboard!
+# {{ $notifiable->getFirstName() }} Τμήμα Υποστήριξης, καλωσόρισες στην ομάδα!
 
-An account has been set up for you by the administrator.  
-You can click the button below to log in with the provided password.  
-It might be a good idea to change the password when you login.
+Ένας λογαριασμός δημιουργήθηκε για εσένα από τον διαχειριστή.  
+Μπορείς να κάνεις σύνδεση πατώντας το παρακάτω κουμπί, χρησιμοποιώντας τον παρεχόμενο κωδικό πρόσβασης.  
+Ίσως είναι καλή ιδέα να αλλάξεις τον κωδικό μετά τη σύνδεση.
 
-**Password:** `{{ $password }}`
+**Κωδικός Πρόσβασης:** `{{ $password }}`
 
 <x-mail::button :url="$loginUrl">
-Login
+Σύνδεση
 </x-mail::button>
 
-See you soon!  
+Τα λέμε σύντομα!  
 {{ config('app.name') }}
 </x-mail::message>
