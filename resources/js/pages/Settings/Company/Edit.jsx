@@ -16,7 +16,6 @@ import {
   TextInput,
   Title,
 } from '@mantine/core';
-import { can } from '@/utils/permissions';
 
 const CompanyEdit = () => {
   const {
