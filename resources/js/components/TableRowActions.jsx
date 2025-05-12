@@ -20,9 +20,9 @@ export default function TableRowActions({
   const openArchiveModal = () =>
     openConfirmModal({
       type: "danger",
-      title: archive.title,
-      content: archive.content,
-      confirmLabel: archive.confirmLabel,
+      title: "Αρχειοθέτηση",
+      content: `Είσαι σίγουρος/η ότι θέλεις να αρχειοθετήσεις αυτό το στοιχείο;`,
+      confirmLabel: "Αρχειοθέτηση",
       confirmProps: { color: "red" },
       onConfirm: () => archiveForm.submit(),
     });
@@ -30,9 +30,9 @@ export default function TableRowActions({
   const openRestoreModal = () =>
     openConfirmModal({
       type: "info",
-      title: restore.title,
-      content: restore.content,
-      confirmLabel: restore.confirmLabel,
+      title: "Επαναφορά",
+      content: `Είσαι σίγουρος/η ότι θέλεις να επαναφέρεις αυτό το στοιχείο;`,
+      confirmLabel: "Επαναφορά",
       confirmProps: { color: "blue" },
       onConfirm: () => restoreForm.submit(),
     });
@@ -70,7 +70,7 @@ export default function TableRowActions({
                   color="blue"
                   onClick={openRestoreModal}
                 >
-                  Restore
+                  Επαναφορά
                 </Menu.Item>
               )}
               {can(archivePermission) && !route().params.archived && (
@@ -81,7 +81,7 @@ export default function TableRowActions({
                   color="red"
                   onClick={openArchiveModal}
                 >
-                  Archive
+                  Αρχειοθέτηση
                 </Menu.Item>
               )}
             </Menu.Dropdown>

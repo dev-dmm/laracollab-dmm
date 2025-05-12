@@ -41,14 +41,14 @@ const UserCreate = () => {
     <>
       <Breadcrumbs fz={14} mb={30}>
         <Anchor href="#" onClick={() => redirectTo("users.index")} fz={14}>
-          Users
+          Χρήστες
         </Anchor>
-        <div>Create</div>
+        <div>Δημιουργία</div>
       </Breadcrumbs>
 
       <Grid justify="space-between" align="flex-end" gutter="xl" mb="lg">
         <Grid.Col span="auto">
-          <Title order={1}>Create user</Title>
+          <Title order={1}>Δημιουργία Χρήστη</Title>
         </Grid.Col>
         <Grid.Col span="content"></Grid.Col>
       </Grid>
@@ -67,26 +67,25 @@ const UserCreate = () => {
             </Grid.Col>
             <Grid.Col span="auto">
               <FileInput
-                label="Profile image"
-                placeholder="Choose image"
+                label="Εικόνα προφίλ"
+                placeholder="Επιλέξτε εικόνα"
                 accept="image/png,image/jpeg"
                 onChange={(image) => updateValue("avatar", image)}
                 clearable
                 error={form.errors.avatar}
               />
               <Text size="xs" c="dimmed" mt="sm">
-                If no image is uploaded we will try to fetch it via{" "}
+                Αν δεν ανεβάσετε εικόνα, θα προσπαθήσουμε να τη βρούμε μέσω της υπηρεσίας{" "}
                 <Anchor href="https://unavatar.io" target="_blank" opacity={0.6}>
                   unavatar.io
-                </Anchor>{" "}
-                service.
+                </Anchor>.
               </Text>
             </Grid.Col>
           </Grid>
 
           <TextInput
-            label="Name"
-            placeholder="User full name"
+            label="Όνομα"
+            placeholder="Ονοματεπώνυμο χρήστη"
             required
             mt="md"
             value={form.data.name}
@@ -95,8 +94,8 @@ const UserCreate = () => {
           />
 
           <TextInput
-            label="Job title"
-            placeholder="e.g. Frontend Developer"
+            label="Τίτλος θέσης"
+            placeholder="π.χ. Frontend Developer"
             required
             mt="md"
             value={form.data.job_title}
@@ -105,8 +104,8 @@ const UserCreate = () => {
           />
 
           <MultiSelect
-            label="Roles"
-            placeholder="Select role"
+            label="Ρόλοι"
+            placeholder="Επιλέξτε ρόλο"
             required
             mt="md"
             value={form.data.roles}
@@ -117,31 +116,31 @@ const UserCreate = () => {
 
           <Group grow mt="md">
             <TextInput
-              label="Phone"
-              placeholder="Users phone number"
+              label="Τηλέφωνο"
+              placeholder="Τηλέφωνο χρήστη"
               value={form.data.phone}
               onChange={(e) => updateValue("phone", e.target.value)}
               error={form.errors.phone}
             />
 
             <NumberInput
-              label="Hourly rate"
+              label="Ωρομίσθιο"
               allowNegative={false}
               clampBehavior="strict"
               decimalScale={2}
               fixedDecimalScale={true}
-              prefix="$"
+              prefix="€"
               value={form.data.rate}
               onChange={(value) => updateValue("rate", value)}
               error={form.errors.rate}
             />
           </Group>
 
-          <Divider mt="xl" mb="md" label="Login credentials" labelPosition="center" />
+          <Divider mt="xl" mb="md" label="Στοιχεία σύνδεσης" labelPosition="center" />
 
           <TextInput
             label="Email"
-            placeholder="User email"
+            placeholder="Email χρήστη"
             required
             value={form.data.email}
             onChange={(e) => updateValue("email", e.target.value)}
@@ -150,8 +149,8 @@ const UserCreate = () => {
           />
 
           <PasswordInput
-            label="Password"
-            placeholder="User password"
+            label="Κωδικός"
+            placeholder="Κωδικός χρήστη"
             required
             mt="md"
             value={form.data.password}
@@ -160,8 +159,8 @@ const UserCreate = () => {
           />
 
           <PasswordInput
-            label="Confirm password"
-            placeholder="Confirm password"
+            label="Επιβεβαίωση κωδικού"
+            placeholder="Επιβεβαίωση κωδικού"
             required
             mt="md"
             value={form.data.password_confirmation}
@@ -171,7 +170,7 @@ const UserCreate = () => {
 
           <Group justify="space-between" mt="xl">
             <BackButton route="users.index" />
-            <ActionButton loading={form.processing}>Create</ActionButton>
+            <ActionButton loading={form.processing}>Δημιουργία</ActionButton>
           </Group>
         </form>
       </ContainerBox>
@@ -179,6 +178,6 @@ const UserCreate = () => {
   );
 };
 
-UserCreate.layout = (page) => <Layout title="Create user">{page}</Layout>;
+UserCreate.layout = (page) => <Layout title="Δημιουργία Χρήστη">{page}</Layout>;
 
 export default UserCreate;

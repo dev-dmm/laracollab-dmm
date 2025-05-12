@@ -14,11 +14,11 @@ export function UserInfoCard({ user }) {
         </Grid.Col>
         <Grid.Col span="auto">
           <Text fz="xs" tt="uppercase" fw={700} c="dimmed">
-            {user.job_title || "Job title"}
+            {user.job_title || "Τίτλος θέσης"}
           </Text>
 
           <Text fz="lg" fw={500} className={classes.name}>
-            {user.name || "Name"}
+            {user.name || "Όνομα"}
           </Text>
 
           <Group wrap="nowrap" gap={10} mt={3}>
@@ -31,7 +31,7 @@ export function UserInfoCard({ user }) {
           <Group wrap="nowrap" gap={10} mt={5}>
             <IconPhoneCall stroke={1.5} size="1rem" className={classes.icon} />
             <Text fz="xs" c="dimmed">
-              {user.phone || "+123 111 222"}
+              {user.phone || "+30 699 123 4567"}
             </Text>
           </Group>
         </Grid.Col>

@@ -15,12 +15,12 @@ const UsersIndex = () => {
   const { items } = usePage().props;
 
   const columns = prepareColumns([
-    { label: "User", column: "name" },
-    { label: "Role", sortable: false },
+    { label: "Χρήστης", column: "name" },
+    { label: "Ρόλος", sortable: false },
     { label: "Email", column: "email" },
-    { label: "Rate", column: "rate", visible: can("view user rate") },
+    { label: "Αμοιβή", column: "rate", visible: can("view user rate") },
     {
-      label: "Actions",
+      label: "Ενέργειες",
       sortable: false,
       visible: actionColumnVisibility("user"),
     },
@@ -40,7 +40,7 @@ const UsersIndex = () => {
       <Grid justify="space-between" align="center">
         <Grid.Col span="content">
           <Group>
-            <SearchInput placeholder="Search users" search={search} />
+            <SearchInput placeholder="Αναζήτηση χρηστών" search={search} />
             <ArchivedFilterButton />
           </Group>
         </Grid.Col>
@@ -51,7 +51,7 @@ const UsersIndex = () => {
               radius="xl"
               onClick={() => redirectTo("users.create")}
             >
-              Create
+              Δημιουργία
             </Button>
           )}
         </Grid.Col>
@@ -72,6 +72,6 @@ const UsersIndex = () => {
   );
 };
 
-UsersIndex.layout = (page) => <Layout title="Users">{page}</Layout>;
+UsersIndex.layout = (page) => <Layout title="Χρήστες">{page}</Layout>;
 
 export default UsersIndex;

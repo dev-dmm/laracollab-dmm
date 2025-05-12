@@ -43,9 +43,9 @@ export default function TableRow({ item }) {
       </Table.Td>
       {can("view user rate") && (
         <Table.Td>
-          <Text fz="sm">{money(item.rate)} / hr</Text>
+          <Text fz="sm">{money(item.rate)} / ώρα</Text>
           <Text fz="xs" c="dimmed">
-            Rate
+            Αμοιβή
           </Text>
         </Table.Td>
       )}
@@ -59,17 +59,17 @@ export default function TableRow({ item }) {
             restorePermission="restore user"
             archive={{
               route: "users.destroy",
-              title: "Archive user",
-              content: `Are you sure you want to archive this user? This action will prevent
-                the user from logging in, while all other aspects related to the
-                user's actions will remain unaffected.`,
-              confirmLabel: "Archive",
+              title: "Αρχειοθέτηση χρήστη",
+              content: `Είσαι σίγουρος/η ότι θέλεις να αρχειοθετήσεις αυτόν τον χρήστη; Αυτή η ενέργεια θα αποτρέψει
+              τον χρήστη από το να συνδεθεί, αλλά όλες οι υπόλοιπες ενέργειές του θα παραμείνουν
+              ανέπαφες.`,
+              confirmLabel: "Αρχειοθέτηση",
             }}
             restore={{
               route: "users.restore",
-              title: "Restore user",
-              content: `Are you sure you want to restore this user? This action will allow the user to login.`,
-              confirmLabel: "Restore",
+              title: "Επαναφορά χρήστη",
+              content: `Είσαι σίγουρος/η ότι θέλεις να επαναφέρεις αυτόν τον χρήστη; Με αυτή την ενέργεια θα μπορεί να συνδεθεί ξανά.`,
+              confirmLabel: "Επαναφορά",
             }}
           />
         </Table.Td>

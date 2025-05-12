@@ -36,7 +36,7 @@ class UserCreatedNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject(config('app.name').' - Your account was created!')
+            ->subject(config('app.name').' - Ο λογαριασμός σας δημιουργήθηκε!')
             ->markdown('emails.account_created', [
                 'notifiable' => $notifiable,
                 'password' => $this->password,

@@ -27,15 +27,15 @@ export default function TableRow({ item }) {
               restorePermission="restore role"
               archive={{
                 route: "settings.roles.destroy",
-                title: "Archive role",
-                content: "Are you sure you want to archive this role?",
-                confirmLabel: "Archive",
+                title: "Αρχειοθέτηση ρόλου",
+                content: "Είσαι σίγουρος/η ότι θέλεις να αρχειοθετήσεις αυτόν τον ρόλο;",
+                confirmLabel: "Αρχειοθέτηση",
               }}
               restore={{
                 route: "settings.roles.restore",
-                title: "Restore role",
-                content: "Are you sure you want to restore this role?",
-                confirmLabel: "Restore",
+                title: "Επαναφορά ρόλου",
+                content: "Είσαι σίγουρος/η ότι θέλεις να επαναφέρεις αυτόν τον ρόλο;",
+                confirmLabel: "Επαναφορά",
               }}
             />
           </Table.Td>
