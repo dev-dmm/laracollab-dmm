@@ -45,14 +45,14 @@ const RoleCreate = () => {
           onClick={() => redirectTo("settings.roles.index")}
           fz={14}
         >
-          Roles
+          Ρόλοι
         </Anchor>
-        <div>Create</div>
+        <div>Δημιουργία</div>
       </Breadcrumbs>
 
       <Grid justify="space-between" align="flex-end" gutter="xl" mb="lg">
         <Grid.Col span="auto">
-          <Title order={1}>Create role</Title>
+          <Title order={1}>Δημιουργία Ρόλου</Title>
         </Grid.Col>
         <Grid.Col span="content"></Grid.Col>
       </Grid>
@@ -60,8 +60,8 @@ const RoleCreate = () => {
       <ContainerBox maw={700}>
         <form onSubmit={submit}>
           <TextInput
-            label="Name"
-            placeholder="Role name"
+            label="Όνομα"
+            placeholder="Όνομα ρόλου"
             required
             value={form.data.name}
             onChange={(e) => updateValue("name", e.target.value)}
@@ -69,7 +69,7 @@ const RoleCreate = () => {
           />
 
           <Title order={3} mt="xl">
-            Permissions
+            Δικαιώματα
           </Title>
 
           {Object.keys(allPermissionsGrouped).map((group) => (
@@ -93,7 +93,7 @@ const RoleCreate = () => {
 
           <Group justify="space-between" mt="xl">
             <BackButton route="settings.roles.index" />
-            <ActionButton loading={form.processing}>Create</ActionButton>
+            <ActionButton loading={form.processing}>Δημιουργία</ActionButton>
           </Group>
         </form>
       </ContainerBox>
@@ -101,6 +101,6 @@ const RoleCreate = () => {
   );
 };
 
-RoleCreate.layout = (page) => <Layout title="Create role">{page}</Layout>;
+RoleCreate.layout = (page) => <Layout title="Δημιουργία Ρόλου">{page}</Layout>;
 
 export default RoleCreate;

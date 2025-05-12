@@ -16,6 +16,7 @@ import {
   TextInput,
   Title,
 } from '@mantine/core';
+import { can } from '@/utils/permissions';
 
 const CompanyEdit = () => {
   const {
@@ -45,25 +46,16 @@ const CompanyEdit = () => {
 
   return (
     <>
-      <Grid
-        justify='space-between'
-        align='flex-end'
-        gutter='xl'
-        mb={35}
-      >
+      <Grid justify='space-between' align='flex-end' gutter='xl' mb={35}>
         <Grid.Col span='auto'>
-          <Title order={1}>My company</Title>
+          <Title order={1}>Η Εταιρεία Μου</Title>
         </Grid.Col>
         <Grid.Col span='content'></Grid.Col>
       </Grid>
 
       <ContainerBox maw={600}>
         <form onSubmit={e => submit(e, { forceFormData: true })}>
-          <Grid
-            justify='flex-start'
-            align='center'
-            gutter='lg'
-          >
+          <Grid justify='flex-start' align='center' gutter='lg'>
             <Grid.Col span='content'>
               {item.logo || form.data.logo ? (
                 <Image
@@ -72,41 +64,30 @@ const CompanyEdit = () => {
                   h={64}
                 />
               ) : (
-                <Box
-                  w={240}
-                  h={64}
-                  bg='#25262b'
-                  align='center'
-                  pt='lg'
-                  opacity={0.6}
-                >
-                  Company logo
+                <Box w={240} h={64} bg='#25262b' align='center' pt='lg' opacity={0.6}>
+                  Λογότυπο Εταιρείας
                 </Box>
               )}
             </Grid.Col>
             <Grid.Col span='auto'>
               <FileInput
-                label='Logo'
-                placeholder='Choose image'
+                label='Λογότυπο'
+                placeholder='Επιλέξτε εικόνα'
                 accept='image/png,image/jpeg'
                 onChange={image => updateValue('logo', image)}
                 clearable
                 error={form.errors.logo}
                 disabled={!can('edit owner company')}
               />
-              <Text
-                size='xs'
-                c='dimmed'
-                mt='sm'
-              >
-                240px &times; 64px (aspect 15:4)
+              <Text size='xs' c='dimmed' mt='sm'>
+                240px × 64px (αναλογία 15:4)
               </Text>
             </Grid.Col>
           </Grid>
 
           <TextInput
-            label='Name'
-            placeholder='Company name'
+            label='Όνομα'
+            placeholder='Όνομα εταιρείας'
             required
             mt='md'
             value={form.data.name}
@@ -115,13 +96,10 @@ const CompanyEdit = () => {
             disabled={!can('edit owner company')}
           />
 
-          <Fieldset
-            legend='Location'
-            mt='xl'
-          >
+          <Fieldset legend='Τοποθεσία' mt='xl'>
             <TextInput
-              label='Address'
-              placeholder='Address'
+              label='Διεύθυνση'
+              placeholder='Διεύθυνση'
               value={form.data.address}
               onChange={e => updateValue('address', e.target.value)}
               error={form.errors.address}
@@ -130,8 +108,8 @@ const CompanyEdit = () => {
 
             <Group grow>
               <TextInput
-                label='Postal code'
-                placeholder='Postal code'
+                label='Τ.Κ.'
+                placeholder='Ταχυδρομικός Κώδικας'
                 mt='md'
                 value={form.data.postal_code}
                 onChange={e => updateValue('postal_code', e.target.value)}
@@ -140,8 +118,8 @@ const CompanyEdit = () => {
               />
 
               <TextInput
-                label='City'
-                placeholder='City'
+                label='Πόλη'
+                placeholder='Πόλη'
                 mt='md'
                 value={form.data.city}
                 onChange={e => updateValue('city', e.target.value)}
@@ -151,10 +129,10 @@ const CompanyEdit = () => {
             </Group>
 
             <Select
-              label='Country'
-              placeholder='Select country'
+              label='Χώρα'
+              placeholder='Επιλέξτε χώρα'
               mt='md'
-              searchable={true}
+              searchable
               value={form.data.country_id?.toString()}
               onChange={value => updateValue('country_id', value)}
               data={countries}
@@ -163,13 +141,10 @@ const CompanyEdit = () => {
             />
           </Fieldset>
 
-          <Fieldset
-            legend='Details'
-            mt='xl'
-          >
+          <Fieldset legend='Στοιχεία' mt='xl'>
             <TextInput
-              label='Business ID'
-              placeholder='Business ID'
+              label='ΑΦΜ Εταιρείας'
+              placeholder='ΑΦΜ ή Επιχειρηματικό ΑΦΜ'
               value={form.data.business_id}
               onChange={e => updateValue('business_id', e.target.value)}
               error={form.errors.business_id}
@@ -177,8 +152,8 @@ const CompanyEdit = () => {
             />
 
             <TextInput
-              label='Tax ID'
-              placeholder='Tax ID'
+              label='Αριθμός Φορολογικού Μητρώου'
+              placeholder='ΑΦΜ'
               mt='md'
               value={form.data.tax_id}
               onChange={e => updateValue('tax_id', e.target.value)}
@@ -187,8 +162,8 @@ const CompanyEdit = () => {
             />
 
             <TextInput
-              label='VAT'
-              placeholder='VAT'
+              label='ΦΠΑ'
+              placeholder='Αρ. ΦΠΑ'
               mt='md'
               value={form.data.vat}
               onChange={e => updateValue('vat', e.target.value)}
@@ -197,10 +172,7 @@ const CompanyEdit = () => {
             />
           </Fieldset>
 
-          <Fieldset
-            legend='Finance'
-            mt='xl'
-          >
+          <Fieldset legend='Οικονομικά' mt='xl'>
             <TextInput
               label='IBAN'
               placeholder='IBAN'
@@ -222,11 +194,11 @@ const CompanyEdit = () => {
 
             <Group grow>
               <Select
-                label='Default currency'
-                placeholder='Select currency'
+                label='Νόμισμα'
+                placeholder='Επιλέξτε νόμισμα'
                 required
                 mt='md'
-                searchable={true}
+                searchable
                 value={form.data.currency_id?.toString()}
                 onChange={value => updateValue('currency_id', value)}
                 data={currencies}
@@ -235,12 +207,12 @@ const CompanyEdit = () => {
               />
 
               <NumberInput
-                label='Tax'
+                label='Φόρος'
                 required
                 allowNegative={false}
                 clampBehavior='strict'
                 decimalScale={2}
-                fixedDecimalScale={true}
+                fixedDecimalScale
                 suffix='%'
                 mt='md'
                 value={form.data.tax}
@@ -251,10 +223,7 @@ const CompanyEdit = () => {
             </Group>
           </Fieldset>
 
-          <Fieldset
-            legend='Contact'
-            mt='xl'
-          >
+          <Fieldset legend='Επικοινωνία' mt='xl'>
             <Group grow>
               <TextInput
                 label='Email'
@@ -266,8 +235,8 @@ const CompanyEdit = () => {
               />
 
               <TextInput
-                label='Phone'
-                placeholder='Phone'
+                label='Τηλέφωνο'
+                placeholder='Τηλέφωνο'
                 value={form.data.phone}
                 onChange={e => updateValue('phone', e.target.value)}
                 error={form.errors.phone}
@@ -276,8 +245,8 @@ const CompanyEdit = () => {
             </Group>
 
             <TextInput
-              label='Web'
-              placeholder='Web'
+              label='Ιστότοπος'
+              placeholder='www.εταιρεία.gr'
               mt='md'
               value={form.data.web}
               onChange={e => updateValue('web', e.target.value)}
@@ -286,12 +255,9 @@ const CompanyEdit = () => {
             />
           </Fieldset>
 
-          <Group
-            justify='flex-end'
-            mt='xl'
-          >
+          <Group justify='flex-end' mt='xl'>
             {can('edit owner company') && (
-              <ActionButton loading={form.processing}>Save</ActionButton>
+              <ActionButton loading={form.processing}>Αποθήκευση</ActionButton>
             )}
           </Group>
         </form>
@@ -300,6 +266,6 @@ const CompanyEdit = () => {
   );
 };
 
-CompanyEdit.layout = page => <Layout title='Edit user'>{page}</Layout>;
+CompanyEdit.layout = page => <Layout title='Επεξεργασία Εταιρείας'>{page}</Layout>;
 
 export default CompanyEdit;

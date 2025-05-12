@@ -20,15 +20,15 @@ export default function TableRow({ item }) {
             restorePermission="restore label"
             archive={{
               route: "settings.labels.destroy",
-              title: "Archive label",
-              content: "Are you sure you want to archive this label?",
-              confirmLabel: "Archive",
+              title: "Αρχειοθέτηση ετικέτας",
+              content: "Είσαι σίγουρος/η ότι θέλεις να αρχειοθετήσεις αυτή την ετικέτα;",
+              confirmLabel: "Αρχειοθέτηση",
             }}
             restore={{
               route: "settings.labels.restore",
-              title: "Restore label",
-              content: "Are you sure you want to restore this label?",
-              confirmLabel: "Restore",
+              title: "Επαναφορά ετικέτας",
+              content: "Είσαι σίγουρος/η ότι θέλεις να επαναφέρεις αυτή την ετικέτα;",
+              confirmLabel: "Επαναφορά",
             }}
           />
         </Table.Td>

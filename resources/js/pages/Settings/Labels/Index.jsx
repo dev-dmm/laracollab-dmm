@@ -15,10 +15,10 @@ const LabelsIndex = () => {
   const { items } = usePage().props;
 
   const columns = prepareColumns([
-    { label: "Color", sortable: false },
-    { label: "Name", column: "name" },
+    { label: "Χρώμα", sortable: false },
+    { label: "Όνομα", column: "name" },
     {
-      label: "Actions",
+      label: "Ενέργειες",
       sortable: false,
       visible: actionColumnVisibility("label"),
     },
@@ -49,7 +49,7 @@ const LabelsIndex = () => {
               radius="xl"
               onClick={() => redirectTo("settings.labels.create")}
             >
-              Create
+              Δημιουργία
             </Button>
           )}
         </Grid.Col>
@@ -70,6 +70,6 @@ const LabelsIndex = () => {
   );
 };
 
-LabelsIndex.layout = (page) => <Layout title="Labels">{page}</Layout>;
+LabelsIndex.layout = (page) => <Layout title="Ετικέτες">{page}</Layout>;
 
 export default LabelsIndex;

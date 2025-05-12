@@ -46,14 +46,14 @@ const RoleEdit = () => {
           onClick={() => redirectTo("settings.roles.index")}
           fz={14}
         >
-          Roles
+          Ρόλοι
         </Anchor>
-        <div>Edit</div>
+        <div>Επεξεργασία</div>
       </Breadcrumbs>
 
       <Grid justify="space-between" align="flex-end" gutter="xl" mb="lg">
         <Grid.Col span="auto">
-          <Title order={1}>Edit role</Title>
+          <Title order={1}>Επεξεργασία Ρόλου</Title>
         </Grid.Col>
         <Grid.Col span="content"></Grid.Col>
       </Grid>
@@ -62,8 +62,8 @@ const RoleEdit = () => {
         <form onSubmit={submit}>
           {form.data.name !== "client" && (
             <TextInput
-              label="Name"
-              placeholder="Role name"
+              label="Όνομα"
+              placeholder="Όνομα ρόλου"
               required
               value={form.data.name}
               onChange={(e) => updateValue("name", e.target.value)}
@@ -72,7 +72,7 @@ const RoleEdit = () => {
           )}
 
           <Title order={3} mt={form.data.name !== "client" ? "xl" : ""}>
-            Permissions
+            Δικαιώματα
           </Title>
 
           {Object.keys(allPermissionsGrouped).map((group) => (
@@ -96,7 +96,7 @@ const RoleEdit = () => {
 
           <Group justify="space-between" mt="xl">
             <BackButton route="settings.roles.index" />
-            <ActionButton loading={form.processing}>Update</ActionButton>
+            <ActionButton loading={form.processing}>Αποθήκευση</ActionButton>
           </Group>
         </form>
       </ContainerBox>
@@ -104,6 +104,6 @@ const RoleEdit = () => {
   );
 };
 
-RoleEdit.layout = (page) => <Layout title="Edit role">{page}</Layout>;
+RoleEdit.layout = (page) => <Layout title="Επεξεργασία Ρόλου">{page}</Layout>;
 
 export default RoleEdit;

@@ -15,10 +15,10 @@ const RolesIndex = () => {
   const { items } = usePage().props;
 
   const columns = prepareColumns([
-    { label: "Name", column: "name" },
-    { label: "Permissions count", sortable: false },
+    { label: "Όνομα", column: "name" },
+    { label: "Αριθμός Δικαιωμάτων", sortable: false },
     {
-      label: "Actions",
+      label: "Ενέργειες",
       sortable: false,
       visible: actionColumnVisibility("role"),
     },
@@ -38,7 +38,7 @@ const RolesIndex = () => {
       <Grid justify="space-between" align="center">
         <Grid.Col span="content">
           <Group>
-            <SearchInput placeholder="Search roles" search={search} />
+            <SearchInput placeholder="Αναζήτηση ρόλων" search={search} />
             <ArchivedFilterButton />
           </Group>
         </Grid.Col>
@@ -49,7 +49,7 @@ const RolesIndex = () => {
               radius="xl"
               onClick={() => redirectTo("settings.roles.create")}
             >
-              Create
+              Δημιουργία
             </Button>
           )}
         </Grid.Col>
@@ -70,6 +70,6 @@ const RolesIndex = () => {
   );
 };
 
-RolesIndex.layout = (page) => <Layout title="Roles">{page}</Layout>;
+RolesIndex.layout = (page) => <Layout title="Ρόλοι">{page}</Layout>;
 
 export default RolesIndex;

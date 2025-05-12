@@ -20,14 +20,14 @@ const LabelEdit = () => {
     <>
       <Breadcrumbs fz={14} mb={30}>
         <Anchor href="#" onClick={() => redirectTo("settings.labels.index")} fz={14}>
-          Labels
+          Ετικέτες
         </Anchor>
-        <div>Edit</div>
+        <div>Επεξεργασία</div>
       </Breadcrumbs>
 
       <Grid justify="space-between" align="flex-end" gutter="xl" mb="lg">
         <Grid.Col span="auto">
-          <Title order={1}>Edit label</Title>
+          <Title order={1}>Επεξεργασία Ετικέτας</Title>
         </Grid.Col>
         <Grid.Col span="content"></Grid.Col>
       </Grid>
@@ -35,16 +35,16 @@ const LabelEdit = () => {
       <ContainerBox maw={400}>
         <form onSubmit={submit}>
           <TextInput
-            label="Name"
-            placeholder="Label name"
+            label="Όνομα"
+            placeholder="Όνομα ετικέτας"
             required
             value={form.data.name}
             onChange={(e) => updateValue("name", e.target.value)}
             error={form.errors.name}
           />
           <ColorInput
-            label="Color"
-            placeholder="Label color"
+            label="Χρώμα"
+            placeholder="Χρώμα ετικέτας"
             required
             mt="md"
             swatches={[
@@ -70,7 +70,7 @@ const LabelEdit = () => {
 
           <Group justify="space-between" mt="xl">
             <BackButton route="settings.labels.index" />
-            <ActionButton loading={form.processing}>Update</ActionButton>
+            <ActionButton loading={form.processing}>Αποθήκευση</ActionButton>
           </Group>
         </form>
       </ContainerBox>
@@ -78,6 +78,6 @@ const LabelEdit = () => {
   );
 };
 
-LabelEdit.layout = (page) => <Layout title="Edit user">{page}</Layout>;
+LabelEdit.layout = (page) => <Layout title="Επεξεργασία Ετικέτας">{page}</Layout>;
 
 export default LabelEdit;
