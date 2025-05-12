@@ -24,34 +24,34 @@ export default function Sidebar() {
   useEffect(() => {
     setItems([
       {
-        label: "Dashboard",
+        label: "Πίνακας Ελέγχου",
         icon: IconGauge,
         link: route("dashboard"),
         active: route().current("dashboard"),
         visible: true,
       },
       {
-        label: "Projects",
+        label: "Έργα",
         icon: IconListDetails,
         link: route("projects.index"),
         active: route().current("projects.*"),
         visible: can("view projects"),
       },
       {
-        label: "My Work",
+        label: "Η Δουλειά Μου",
         icon: IconLayoutList,
         active: route().current("my-work.*"),
         opened: route().current("my-work.*"),
         visible: can("view tasks") || can("view activities"),
         links: [
           {
-            label: "Tasks",
+            label: "Εργασίες",
             link: route("my-work.tasks.index"),
             active: route().current("my-work.tasks.*"),
             visible: can("view tasks"),
           },
           {
-            label: "Activity",
+            label: "Δραστηριότητα",
             link: route("my-work.activity.index"),
             active: route().current("my-work.activity.*"),
             visible: can("view activities"),
@@ -59,20 +59,20 @@ export default function Sidebar() {
         ],
       },
       {
-        label: "Clients",
+        label: "Πελάτες",
         icon: IconBuildingSkyscraper,
         active: route().current("clients.*"),
         opened: route().current("clients.*"),
         visible: can("view client users") || can("view client companies"),
         links: [
           {
-            label: "Users",
+            label: "Χρήστες",
             link: route("clients.users.index"),
             active: route().current("clients.users.*"),
             visible: can("view client users"),
           },
           {
-            label: "Companies",
+            label: "Εταιρείες",
             link: route("clients.companies.index"),
             active: route().current("clients.companies.*"),
             visible: can("view client companies"),
@@ -80,34 +80,34 @@ export default function Sidebar() {
         ],
       },
       {
-        label: "Users",
+        label: "Χρήστες",
         icon: IconUsers,
         link: route("users.index"),
         active: route().current("users.*"),
         visible: can("view users"),
       },
       {
-        label: "Invoices",
+        label: "Τιμολόγια",
         icon: IconFileDollar,
         link: route("invoices.index"),
         active: route().current("invoices.*"),
         visible: can("view invoices"),
       },
       {
-        label: "Reports",
+        label: "Αναφορές",
         icon: IconReportAnalytics,
         active: route().current("reports.*"),
         opened: route().current("reports.*"),
         visible: can("view logged time sum report") || can("view daily logged time report"),
         links: [
           {
-            label: "Logged time sum",
+            label: "Σύνολο Χρόνου",
             link: route("reports.logged-time.sum"),
             active: route().current("reports.logged-time.sum"),
             visible: can("view logged time sum report"),
           },
           {
-            label: "Daily logged time",
+            label: "Ημερήσιος Χρόνος",
             link: route("reports.logged-time.daily"),
             active: route().current("reports.logged-time.daily"),
             visible: can("view daily logged time report"),
@@ -115,26 +115,26 @@ export default function Sidebar() {
         ],
       },
       {
-        label: "Settings",
+        label: "Ρυθμίσεις",
         icon: IconSettings,
         active: route().current("settings.*"),
         opened: route().current("settings.*"),
         visible: can("view owner company") || can("view roles") || can("view labels"),
         links: [
           {
-            label: "Company",
+            label: "Εταιρεία",
             link: route("settings.company.edit"),
             active: route().current("settings.company.*"),
             visible: can("view owner company"),
           },
           {
-            label: "Roles",
+            label: "Ρόλοι",
             link: route("settings.roles.index"),
             active: route().current("settings.roles.*"),
             visible: can("view roles"),
           },
           {
-            label: "Labels",
+            label: "Ετικέτες",
             link: route("settings.labels.index"),
             active: route().current("settings.labels.*"),
             visible: can("view labels"),
