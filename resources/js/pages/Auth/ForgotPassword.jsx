@@ -25,35 +25,34 @@ const ForgotPassword = ({ status }) => {
   const submit = (e) => {
     e.preventDefault();
     form.clearErrors();
-
     form.submit({ preserveScroll: true });
   };
 
   return (
     <>
       <Title className={classes.title} ta="center">
-        Forgot your password?
+        Ξεχάσατε τον κωδικό σας;
       </Title>
       <Text c="dimmed" fz="sm" ta="center">
-        Enter your email to get a reset link
+        Εισάγετε το email σας για να λάβετε σύνδεσμο επαναφοράς
       </Text>
 
       <ContainerBox shadow="md" p={30} mt="xl" radius="md">
         <Text c="dimmed" fz="sm" mb={20}>
-          Enter your email and we will email you a password reset link that will allow you to choose
-          a new one.
+          Πληκτρολογήστε το email σας και θα σας στείλουμε έναν σύνδεσμο επαναφοράς κωδικού
+          ώστε να ορίσετε έναν νέο.
         </Text>
 
         {status && (
           <Alert radius="md" title={status} icon={<IconInfoCircle />} mb={10}>
-            Please read instruction in the email to set a new password for your account.
+            Ελέγξτε το email σας και ακολουθήστε τις οδηγίες για να ορίσετε νέο κωδικό πρόσβασης.
           </Alert>
         )}
 
         <form onSubmit={submit}>
           <TextInput
             label="Email"
-            placeholder="Your email"
+            placeholder="Το email σας"
             required
             onChange={(e) => form.setData("email", e.target.value)}
             onBlur={() => form.validate("email")}
@@ -68,11 +67,11 @@ const ForgotPassword = ({ status }) => {
             >
               <Center inline>
                 <IconArrowLeft style={{ width: rem(12), height: rem(12) }} stroke={1.5} />
-                <Box ml={5}>Back to the login</Box>
+                <Box ml={5}>Επιστροφή στη σύνδεση</Box>
               </Center>
             </Anchor>
             <Button type="submit" className={classes.control} disabled={form.processing}>
-              Reset password
+              Επαναφορά κωδικού
             </Button>
           </Group>
         </form>
@@ -81,6 +80,6 @@ const ForgotPassword = ({ status }) => {
   );
 };
 
-ForgotPassword.layout = (page) => <GuestLayout title="Forgot Password">{page}</GuestLayout>;
+ForgotPassword.layout = (page) => <GuestLayout title="Επαναφορά Κωδικού">{page}</GuestLayout>;
 
 export default ForgotPassword;

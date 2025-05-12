@@ -28,24 +28,24 @@ const ResetPassword = ({ token }) => {
   return (
     <>
       <Title className={classes.title} ta="center">
-        Reset Password
+        Επαναφορά Κωδικού
       </Title>
       <Text c="dimmed" fz="sm" ta="center">
-        Enter your email and new password
+        Εισάγετε το email σας και τον νέο σας κωδικό
       </Text>
 
       <ContainerBox shadow="md" p={30} mt="xl" radius="md">
         <form onSubmit={submit}>
           <TextInput
             label="Email"
-            placeholder="Your email"
+            placeholder="Το email σας"
             required
             onChange={(e) => form.setData("email", e.target.value)}
             error={form.errors.email}
           />
           <PasswordInput
-            label="Password"
-            placeholder="New password"
+            label="Νέος Κωδικός"
+            placeholder="Ορίστε νέο κωδικό"
             required
             mt="md"
             value={form.data.password}
@@ -53,8 +53,8 @@ const ResetPassword = ({ token }) => {
             error={form.errors.password}
           />
           <PasswordInput
-            label="Confirm Password"
-            placeholder="Repeat new password"
+            label="Επιβεβαίωση Κωδικού"
+            placeholder="Επαναλάβετε τον νέο κωδικό"
             required
             mt="md"
             value={form.data.password_confirmation}
@@ -62,7 +62,7 @@ const ResetPassword = ({ token }) => {
             error={form.errors.password_confirmation}
           />
           <Button type="submit" fullWidth mt="xl" disabled={form.processing}>
-            Reset password
+            Επαναφορά Κωδικού
           </Button>
         </form>
       </ContainerBox>
@@ -70,6 +70,6 @@ const ResetPassword = ({ token }) => {
   );
 };
 
-ResetPassword.layout = (page) => <GuestLayout title="Reset Password">{page}</GuestLayout>;
+ResetPassword.layout = (page) => <GuestLayout title="Επαναφορά Κωδικού">{page}</GuestLayout>;
 
 export default ResetPassword;

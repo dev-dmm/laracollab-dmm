@@ -9,29 +9,28 @@ export default function LoginNotification({ notify }) {
   return (
     <div style={{ marginTop: "25px" }}>
       {notify === "password-reset" && (
-        <Alert radius="md" title="Password was reset" icon={<IconInfoCircle />}>
-          Your password was successfully updated, you may use it to login.
+        <Alert radius="md" title="Ο κωδικός άλλαξε" icon={<IconInfoCircle />}>
+          Ο κωδικός σας ενημερώθηκε με επιτυχία. Μπορείτε να συνδεθείτε με τον νέο σας κωδικό.
         </Alert>
       )}
       {notify === "social-login-user-not-found" && (
         <Alert
           radius="md"
-          title="Login failed"
+          title="Αποτυχία σύνδεσης"
           icon={<IconAlertTriangle />}
           color="orange"
         >
-          No user was found with your Google email address.
+          Δεν βρέθηκε χρήστης με αυτό το email από την Google.
         </Alert>
       )}
       {notify === "social-login-failed" && (
         <Alert
           radius="md"
-          title="Whoops, something went wrong"
+          title="Ουπς, κάτι πήγε στραβά"
           icon={<IconExclamationCircle />}
           color="red"
         >
-          Unexpected error has occurred, please try logging in with your email
-          and password.
+          Παρουσιάστηκε απρόσμενο σφάλμα. Δοκιμάστε να συνδεθείτε με email και κωδικό.
         </Alert>
       )}
     </div>
