@@ -24,7 +24,7 @@ const NotificationsIndex = () => {
     <>
       <Grid justify="space-between" align="flex-end" gutter="xl" mb="lg">
         <Grid.Col span="auto">
-          <Title order={1}>Notifications</Title>
+          <Title order={1}>Ειδοποιήσεις</Title>
         </Grid.Col>
         <Grid.Col span="content"></Grid.Col>
       </Grid>
@@ -70,8 +70,8 @@ const NotificationsIndex = () => {
         ) : (
           <Center mih={160}>
             <EmptyWithIcon
-              title="No notifications"
-              subtitle="List of recent notifications"
+              title="Δεν υπάρχουν ειδοποιήσεις"
+              subtitle="Λίστα πρόσφατων ειδοποιήσεων"
               icon={IconMessage}
             />
           </Center>
@@ -81,6 +81,6 @@ const NotificationsIndex = () => {
   );
 };
 
-NotificationsIndex.layout = (page) => <Layout title="Notifications">{page}</Layout>;
+NotificationsIndex.layout = (page) => <Layout title="Ειδοποιήσεις">{page}</Layout>;
 
 export default NotificationsIndex;

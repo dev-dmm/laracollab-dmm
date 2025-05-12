@@ -35,7 +35,7 @@ const ProfileIndex = () => {
     <>
       <Grid justify="space-between" align="flex-end" gutter="xl" mb="lg">
         <Grid.Col span="auto">
-          <Title order={1}>My Profile</Title>
+          <Title order={1}>Το Προφίλ μου</Title>
         </Grid.Col>
         <Grid.Col span="content"></Grid.Col>
       </Grid>
@@ -56,26 +56,25 @@ const ProfileIndex = () => {
             </Grid.Col>
             <Grid.Col span="auto">
               <FileInput
-                label="Profile image"
-                placeholder="Choose image"
+                label="Εικόνα προφίλ"
+                placeholder="Επιλέξτε εικόνα"
                 accept="image/png,image/jpeg"
                 onChange={(image) => updateValue("avatar", image)}
                 clearable
                 error={form.errors.avatar}
               />
               <Text size="xs" c="dimmed" mt="sm">
-                If no image is uploaded we will try to fetch it via{" "}
+                Αν δεν επιλέξετε εικόνα, θα προσπαθήσουμε να την ανακτήσουμε από{" "}
                 <Anchor href="https://unavatar.io" target="_blank" opacity={0.6}>
                   unavatar.io
-                </Anchor>{" "}
-                service.
+                </Anchor>
               </Text>
             </Grid.Col>
           </Grid>
 
           <TextInput
-            label="Name"
-            placeholder="User full name"
+            label="Όνομα"
+            placeholder="Πλήρες όνομα χρήστη"
             required
             mt="md"
             value={form.data.name}
@@ -84,8 +83,8 @@ const ProfileIndex = () => {
           />
 
           <TextInput
-            label="Job title"
-            placeholder="e.g. Frontend Developer"
+            label="Τίτλος Εργασίας"
+            placeholder="π.χ. Frontend Developer"
             required
             mt="md"
             value={form.data.job_title}
@@ -94,19 +93,19 @@ const ProfileIndex = () => {
           />
 
           <TextInput
-            label="Phone"
-            placeholder="Users phone number"
+            label="Τηλέφωνο"
+            placeholder="Αριθμός τηλεφώνου"
             mt="md"
             value={form.data.phone}
             onChange={(e) => updateValue("phone", e.target.value)}
             error={form.errors.phone}
           />
 
-          <Divider mt="xl" mb="md" label="Login credentials" labelPosition="center" />
+          <Divider mt="xl" mb="md" label="Στοιχεία Σύνδεσης" labelPosition="center" />
 
           <TextInput
             label="Email"
-            placeholder="User email"
+            placeholder="Το email σας"
             required
             value={form.data.email}
             onChange={(e) => updateValue("email", e.target.value)}
@@ -115,8 +114,8 @@ const ProfileIndex = () => {
           />
 
           <PasswordInput
-            label="Password"
-            placeholder="User password"
+            label="Κωδικός"
+            placeholder="Νέος κωδικός"
             mt="md"
             value={form.data.password}
             onChange={(e) => updateValue("password", e.target.value)}
@@ -124,8 +123,8 @@ const ProfileIndex = () => {
           />
 
           <PasswordInput
-            label="Confirm password"
-            placeholder="Confirm password"
+            label="Επιβεβαίωση Κωδικού"
+            placeholder="Επαναλάβετε τον νέο κωδικό"
             mt="md"
             value={form.data.password_confirmation}
             onChange={(e) => updateValue("password_confirmation", e.target.value)}
@@ -133,7 +132,7 @@ const ProfileIndex = () => {
           />
 
           <Group justify="flex-end" mt="xl">
-            <ActionButton loading={form.processing}>Update</ActionButton>
+            <ActionButton loading={form.processing}>Αποθήκευση</ActionButton>
           </Group>
         </form>
       </ContainerBox>
@@ -141,6 +140,6 @@ const ProfileIndex = () => {
   );
 };
 
-ProfileIndex.layout = (page) => <Layout title="Profile">{page}</Layout>;
+ProfileIndex.layout = (page) => <Layout title="Προφίλ">{page}</Layout>;
 
 export default ProfileIndex;
