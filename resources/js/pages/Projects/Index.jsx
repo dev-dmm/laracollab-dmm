@@ -39,9 +39,15 @@ const ProjectsIndex = () => {
 
       {items.length ? (
         <Flex mt="xl" gap="lg" justify="flex-start" align="flex-start" direction="row" wrap="wrap">
-          {items.map((item) => (
-            <ProjectCard item={item} key={item.id} />
-          ))}
+          {[...items]
+            .sort((a, b) => {
+              const uncompletedA = a.all_tasks_count - a.completed_tasks_count;
+              const uncompletedB = b.all_tasks_count - b.completed_tasks_count;
+              return uncompletedB - uncompletedA; // descending order
+            })
+            .map((item) => (
+              <ProjectCard item={item} key={item.id} />
+            ))}
         </Flex>
       ) : (
         <Center mih={400}>

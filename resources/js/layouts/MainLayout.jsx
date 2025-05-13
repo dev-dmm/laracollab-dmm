@@ -46,7 +46,7 @@ export default function MainLayout({ children, title }) {
           />
         )}
         {/* <div style={{ fontWeight: 600, marginLeft: '1rem' }}>LaraCollab</div> */}
-        <Logo style={{ width: rem(120) }} />
+        <Logo style={{ width: rem(120),marginLeft: '1rem' }} />
       </AppShell.Header>
 
       <AppShell.Navbar>
