@@ -10,10 +10,11 @@ import { useEffect } from "react";
 
 export default function MainLayout({ children, title }) {
   window.can = useAuthorization().can;
-
   const { initUserWebSocket } = useWebSockets();
   const { notifications } = usePage().props.auth;
   const { setNotifications } = useNotificationsStore();
+
+  const [opened, { toggle }] = useDisclosure();
 
   useEffect(() => {
     initUserWebSocket();
@@ -22,20 +23,33 @@ export default function MainLayout({ children, title }) {
 
   return (
     <AppShell
-      navbar={{ width: 300, breakpoint: "sm", collapsed: { mobile: false } }}
-      padding="4rem"
+      padding="md"
+      navbar={{
+        width: 300,
+        breakpoint: "sm",
+        collapsed: { mobile: !opened },
+      }}
+      navbarOffsetBreakpoint="sm"
+      withBorder={false}
+      asideOffsetBreakpoint="sm"
     >
       <Head title={title} />
 
-      <FlashNotification />
+      <AppShell.Header>
+        <MediaQuery largerThan="sm" styles={{ display: "none" }}>
+          <Burger opened={opened} onClick={toggle} size="sm" ml="md" />
+        </MediaQuery>
+      </AppShell.Header>
 
-      <Notifications />
-
-      <AppShell.Navbar>
-        <NavBarNested></NavBarNested>
+      <AppShell.Navbar p="md">
+        <NavBarNested />
       </AppShell.Navbar>
 
-      <AppShell.Main>{children}</AppShell.Main>
+      <AppShell.Main>
+        <FlashNotification />
+        <Notifications />
+        {children}
+      </AppShell.Main>
     </AppShell>
   );
 }
