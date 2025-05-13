@@ -1,19 +1,16 @@
-import { useEffect } from "react";
+import { useDisclosure } from "@mantine/hooks";
+import { AppShell, Burger, useMantineTheme } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 import { Head, usePage } from "@inertiajs/react";
-import {
-  AppShell,
-  Burger,
-  useMantineTheme,
-} from "@mantine/core";
-import { useDisclosure, useMediaQuery } from "@mantine/hooks";
+import { useEffect } from "react";
 
 import FlashNotification from "@/components/FlashNotification";
 import Notifications from "@/layouts/Notifications";
-import NavBarNested from "@/layouts/NavBarNested";
-
-import useAuthorization from "@/hooks/useAuthorization";
 import useWebSockets from "@/hooks/useWebSockets";
 import useNotificationsStore from "@/hooks/store/useNotificationsStore";
+import useAuthorization from "@/hooks/useAuthorization";
+import NavBarNested from "@/layouts/NavBarNested";
+import Logo from "@/components/Logo";
 
 export default function MainLayout({ children, title }) {
   const theme = useMantineTheme();
@@ -24,7 +21,6 @@ export default function MainLayout({ children, title }) {
   const { notifications } = usePage().props.auth;
   const { setNotifications } = useNotificationsStore();
 
-  // make `can()` globally available
   window.can = useAuthorization().can;
 
   useEffect(() => {
@@ -33,47 +29,28 @@ export default function MainLayout({ children, title }) {
   }, []);
 
   return (
-    <AppShell
-      padding="md"
-      navbar={{
-        width: 300,
-        breakpoint: "sm",
-        collapsed: { mobile: !opened },
-      }}
-    >
+      <AppShell
+        padding="md"
+        header={{ height: 60 }} // ✅ This ensures header is consistent
+        navbar={{ width: 300, breakpoint: "sm", collapsed: { mobile: !opened } }}
+      >
       <Head title={title} />
 
-      {/* Optional minimal mobile header with burger */}
-      {isMobile && (
-        <AppShell.Header
-          style={{
-            height: 60,
-            display: "flex",
-            alignItems: "center",
-            padding: "0 1rem",
-            backgroundColor:
-              theme.colorScheme === "dark"
-                ? theme.colors.dark[7]
-                : theme.white,
-            borderBottom: `1px solid ${
-              theme.colorScheme === "dark"
-                ? theme.colors.dark[4]
-                : theme.colors.gray[3]
-            }`,
-            zIndex: 100,
-          }}
-        >
+      <AppShell.Header style={{ display: 'flex', alignItems: 'center', padding: '0 1rem' }}>
+        {isMobile && (
           <Burger
             opened={opened}
             onClick={toggle}
             size="sm"
             color={theme.colors.gray[6]}
           />
-        </AppShell.Header>
-      )}
+        )}
+        {/* <div style={{ fontWeight: 600, marginLeft: '1rem' }}>LaraCollab</div> */}
+        <Logo style={{ width: rem(120) }} />
+      </AppShell.Header>
 
-      <AppShell.Navbar p="md">
-        <NavBarNested />
+      <AppShell.Navbar>
+        <NavBarNested></NavBarNested>
       </AppShell.Navbar>
 
       <AppShell.Main>

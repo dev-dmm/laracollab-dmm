@@ -145,15 +145,15 @@ export default function Sidebar() {
   }, []);
 
   return (
-    <div className={classes.navbar}>
-      <div className={classes.header}>
+    <nav className={classes.navbar}>
+      {/* <div className={classes.header}>
         <Group justify="space-between">
           <Logo style={{ width: rem(120) }} />
           <Text size="xs" className={classes.version}>
             v{version}
           </Text>
         </Group>
-      </div>
+      </div> */}
 
       <ScrollArea className={classes.links}>
         <div className={classes.linksInner}>
@@ -168,6 +168,6 @@ export default function Sidebar() {
       <div className={classes.footer}>
         <UserButton />
       </div>
-    </div>
+    </nav>
   );
 }
