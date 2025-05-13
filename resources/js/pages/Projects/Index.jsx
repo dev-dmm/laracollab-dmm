@@ -9,7 +9,7 @@ import { Button, Center, Flex, Grid, Group } from "@mantine/core";
 import { IconPlus, IconSearch } from "@tabler/icons-react";
 import ProjectCard from "./Index/ProjectCard";
 import { useState } from "react";
-import FilterButton from "@/components/Filters/FilterButton"; 
+import FilterButton from "@/pages/Projects/Tasks/Index/Filters/FilterButton"; 
 
 const ProjectsIndex = () => {
   const { items } = usePage().props;
