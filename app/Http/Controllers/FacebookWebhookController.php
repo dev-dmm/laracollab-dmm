@@ -72,14 +72,6 @@ class FacebookWebhookController extends Controller
 
         Log::info('Parsed client data from lead form', $clientData);
 
-<<<<<<< HEAD
-=======
-        file_put_contents(
-            storage_path('logs/fb_request_dump.txt'),
-            print_r($request->all(), true)."\n\n",
-            FILE_APPEND
-        );
->>>>>>> ea39c9470e9b578edb59685a8466fc78cdcf2632
         // ✅ Step 7: Create the client
         try {
             $user = app(CreateClient::class)->create($clientData);
