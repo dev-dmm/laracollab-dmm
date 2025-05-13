@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\FacebookWebhookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\FacebookWebhookController;
 
 Route::match(['get', 'post'], '/v1/facebook_webhook', [FacebookWebhookController::class, 'handle']);
 
