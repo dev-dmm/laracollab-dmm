@@ -28,27 +28,23 @@ export default function MainLayout({ children, title }) {
   }, []);
 
   return (
-    <AppShell
-      padding="md"
-      navbar={{
-        width: 300,
-        breakpoint: "sm",
-        collapsed: { mobile: !opened },
-      }}
-      header={{ height: 60 }}
-    >
+      <AppShell
+        padding="md"
+        header={{ height: 60 }} // ✅ This ensures header is consistent
+        navbar={{ width: 300, breakpoint: "sm", collapsed: { mobile: !opened } }}
+      >
       <Head title={title} />
 
-      <AppShell.Header>
+      <AppShell.Header style={{ display: 'flex', alignItems: 'center', padding: '0 1rem' }}>
         {isMobile && (
           <Burger
             opened={opened}
             onClick={toggle}
             size="sm"
             color={theme.colors.gray[6]}
-            style={{ margin: "1rem" }}
           />
         )}
+        <div style={{ fontWeight: 600, marginLeft: '1rem' }}>LaraCollab</div>
       </AppShell.Header>
 
       <AppShell.Navbar p="md">

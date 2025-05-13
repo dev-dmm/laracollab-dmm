@@ -145,7 +145,7 @@ export default function Sidebar() {
   }, []);
 
   return (
-    <nav className={classes.navbar}>
+    <div className={classes.navbar}>  
       <div className={classes.header}>
         <Group justify="space-between">
           <Logo style={{ width: rem(120) }} />
@@ -168,6 +168,6 @@ export default function Sidebar() {
       <div className={classes.footer}>
         <UserButton />
       </div>
-    </nav>
+    </div>
   );
 }
