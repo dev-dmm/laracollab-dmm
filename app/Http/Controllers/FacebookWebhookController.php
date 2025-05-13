@@ -27,7 +27,7 @@ class FacebookWebhookController extends Controller
 
         file_put_contents(
             storage_path('logs/fb_request_dump.txt'),
-            print_r($request->all(), true) . "\n\n",
+            print_r($request->all(), true)."\n\n",
             FILE_APPEND
         );
         // ✅ Step 3: Extract leadgen_id
