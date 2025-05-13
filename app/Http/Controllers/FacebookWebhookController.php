@@ -40,7 +40,7 @@ class FacebookWebhookController extends Controller
 
         // ✅ Step 4: Fetch lead details from Graph API
         $accessToken = env('FACEBOOK_PAGE_ACCESS_TOKEN');
-        $response = Http::get("https://graph.facebook.com/v18.0/{$leadgenId}", [
+        $response = Http::get("https://graph.facebook.com/v22.0/{$leadgenId}", [
             'access_token' => $accessToken,
         ]);
 
