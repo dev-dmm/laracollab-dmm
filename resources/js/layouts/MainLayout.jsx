@@ -1,5 +1,5 @@
 import { useDisclosure } from "@mantine/hooks";
-import { AppShell, Burger, useMantineTheme } from "@mantine/core";
+import { AppShell, Burger, useMantineTheme, rem } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { Head, usePage } from "@inertiajs/react";
 import { useEffect } from "react";
