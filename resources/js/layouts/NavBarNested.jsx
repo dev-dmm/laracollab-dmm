@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import NavbarLinksGroup from "./NavbarLinksGroup";
 import UserButton from "./UserButton";
 import classes from "./css/NavBarNested.module.css";
+import clsx from "clsx";
 
 export default function Sidebar() {
   const { version } = usePage().props;
@@ -145,7 +146,7 @@ export default function Sidebar() {
   }, []);
 
   return (
-    <nav className={classes.navbar}>
+    <nav className={clsx(classes.navbar, navbarOpened && classes.navbarOpen)}>
       <div className={classes.header}>
         <Group justify="space-between">
           <Logo style={{ width: rem(120) }} />

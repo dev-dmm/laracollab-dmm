@@ -124,10 +124,8 @@ const InvoiceEdit = () => {
           href='#'
           onClick={() => redirectTo('invoices.index')}
           fz={14}
-        >
-          Invoices
-        </Anchor>
-        <div>Edit</div>
+        >Λεωφορτώσεις</Anchor>
+        <div>Επεξεργασία</div>
       </Breadcrumbs>
 
       <Grid
@@ -137,7 +135,7 @@ const InvoiceEdit = () => {
         mb='lg'
       >
         <Grid.Col span='auto'>
-          <Title order={1}>Edit invoice</Title>
+          <Title order={1}>Επεξεργασία τιμολογίου</Title>
         </Grid.Col>
         <Grid.Col span='content'></Grid.Col>
       </Grid>
@@ -151,8 +149,8 @@ const InvoiceEdit = () => {
         <ContainerBox miw='440'>
           <form onSubmit={submit}>
             <TextInput
-              label='Invoice number'
-              placeholder='Invoice number'
+              label='Αριθμός τιμολογίου'
+              placeholder='Αριθμός τιμολογίου'
               required
               value={form.data.number}
               onChange={e => updateValue('number', e.target.value)}
@@ -160,8 +158,8 @@ const InvoiceEdit = () => {
             />
 
             <Select
-              label='Client company'
-              placeholder='Select client company'
+              label='Εταιρεία Πελάτη'
+              placeholder='Επιλέξτε εταιρεία πελάτη'
               searchable={true}
               allowDeselect={false}
               mt='md'
@@ -173,7 +171,7 @@ const InvoiceEdit = () => {
             />
 
             <MultiSelect
-              label='Projects'
+              label='Έργα'
               placeholder={
                 filteredProjects.length ? 'Select projects' : 'Please select client company first'
               }
@@ -187,7 +185,7 @@ const InvoiceEdit = () => {
             />
 
             <Checkbox
-              label='Fixed amount for whole invoice'
+              label='Σταθερή αμοιβή για ολόκληρη την αποστολή'
               mt='md'
               checked={form.data.type === 'fixed_amount'}
               onChange={event =>
@@ -197,7 +195,7 @@ const InvoiceEdit = () => {
 
             {form.data.type === 'default' && (
               <NumberInput
-                label='Hourly rate'
+                label='Ωριαίο ποσοστό'
                 mt='md'
                 allowNegative={false}
                 clampBehavior='strict'
@@ -212,7 +210,7 @@ const InvoiceEdit = () => {
 
             {form.data.type === 'fixed_amount' && (
               <NumberInput
-                label='Fixed amount'
+                label='Σταθερή ποσότητα'
                 mt='md'
                 allowNegative={false}
                 clampBehavior='strict'
@@ -226,8 +224,8 @@ const InvoiceEdit = () => {
             )}
 
             <Textarea
-              label='Note'
-              placeholder='Invoice note'
+              label='Σημείωση'
+              placeholder='Σημείωση τιμολογίου'
               mt='md'
               autosize
               minRows={4}
@@ -241,7 +239,7 @@ const InvoiceEdit = () => {
               mt={30}
             >
               <BackButton route='invoices.index' />
-              <ActionButton loading={form.processing}>Update</ActionButton>
+              <ActionButton loading={form.processing}>Ενημέρωση</ActionButton>
             </Group>
           </form>
         </ContainerBox>
@@ -275,9 +273,7 @@ const InvoiceEdit = () => {
                     <Text
                       size='sm'
                       c='dimmed'
-                    >
-                      No tasks with logged time were found
-                    </Text>
+                    >Δεν βρέθηκαν εργασίες με καταγεγραμμένο χρόνο.</Text>
                   )}
                 </Box>
               ))}
@@ -291,9 +287,7 @@ const InvoiceEdit = () => {
                     lts={1}
                     fw={600}
                     mb={-5}
-                  >
-                    Total:
-                  </Text>
+                  >Σύνολο:</Text>
                   <Text
                     fw={700}
                     fz={32}
@@ -315,15 +309,11 @@ const InvoiceEdit = () => {
                     fz={24}
                     fw={600}
                     align='center'
-                  >
-                    No tasks found
-                  </Text>
+                  >Δεν βρέθηκαν εργασίες</Text>
                   <Text
                     fz={15}
                     c='dimmed'
-                  >
-                    Select company and at least one project
-                  </Text>
+                  >Επιλέξτε εταιρεία και τουλάχιστον ένα έργο</Text>
                 </Box>
               </Center>
             </>
@@ -334,6 +324,6 @@ const InvoiceEdit = () => {
   );
 };
 
-InvoiceEdit.layout = page => <Layout title='Edit invoice'>{page}</Layout>;
+InvoiceEdit.layout = page => <Layout title='Επεξεργασία τιμολογίου'>{page}</Layout>;
 
 export default InvoiceEdit;

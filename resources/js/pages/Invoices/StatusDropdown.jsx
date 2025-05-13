@@ -35,9 +35,7 @@ export default function StatusDropdown({ invoiceId, status }) {
         <Menu.Item
           leftSection={<IconPlus style={{ width: rem(14), height: rem(14) }} />}
           onClick={() => setStatus(invoiceId, "new")}
-        >
-          New
-        </Menu.Item>
+        >Νέο</Menu.Item>
         <Menu.Item
           my={5}
           leftSection={<IconMail style={{ width: rem(14), height: rem(14) }} />}
@@ -48,9 +46,7 @@ export default function StatusDropdown({ invoiceId, status }) {
         <Menu.Item
           leftSection={<IconCheck style={{ width: rem(14), height: rem(14) }} />}
           onClick={() => setStatus(invoiceId, "paid")}
-        >
-          Paid
-        </Menu.Item>
+        >Πληρωμή</Menu.Item>
       </Menu.Dropdown>
     </Menu>
   );

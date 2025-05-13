@@ -47,9 +47,7 @@ export default function TableRow({ item }) {
             {item.client_company.name}
           </Text>
         </Anchor>
-        <Text fz="xs" c="dimmed">
-          Client company
-        </Text>
+        <Text fz="xs" c="dimmed">Εταιρεία πελάτη</Text>
       </Table.Td>
       <Table.Td>
         {item.note ? (

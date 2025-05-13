@@ -44,7 +44,7 @@ const InvoicesIndex = () => {
       <Grid justify="space-between" align="center">
         <Grid.Col span="content">
           <Group>
-            <SearchInput placeholder="Search invoices" search={search} />
+            <SearchInput placeholder="Αναζήτηση τιμολογίων" search={search} />
             <ArchivedFilterButton />
           </Group>
         </Grid.Col>
@@ -54,9 +54,7 @@ const InvoicesIndex = () => {
               leftSection={<IconPlus size={14} />}
               radius="xl"
               onClick={() => redirectTo("invoices.create")}
-            >
-              Create
-            </Button>
+            >Δημιουργία</Button>
           )}
         </Grid.Col>
       </Grid>
@@ -73,6 +71,6 @@ const InvoicesIndex = () => {
   );
 };
 
-InvoicesIndex.layout = (page) => <Layout title="Invoices">{page}</Layout>;
+InvoicesIndex.layout = (page) => <Layout title="Αντίγραφα τιμολογίων">{page}</Layout>;
 
 export default InvoicesIndex;
