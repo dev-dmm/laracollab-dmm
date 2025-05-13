@@ -18,7 +18,7 @@ import UserButton from "./UserButton";
 import classes from "./css/NavBarNested.module.css";
 import clsx from "clsx";
 
-export default function Sidebar() {
+export default function Sidebar({ navbarOpened }) {
   const { version } = usePage().props;
   const { items, setItems } = useNavigationStore();
 

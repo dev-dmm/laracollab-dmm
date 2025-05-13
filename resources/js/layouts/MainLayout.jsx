@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { AppShell, Burger, Text } from "@mantine/core";
 import { Head, usePage } from "@inertiajs/react";
 import FlashNotification from "@/components/FlashNotification";
@@ -6,16 +6,16 @@ import useNotificationsStore from "@/hooks/store/useNotificationsStore";
 import useAuthorization from "@/hooks/useAuthorization";
 import useWebSockets from "@/hooks/useWebSockets";
 import Notifications from "@/layouts/Notifications";
-import Sidebar from "@/layouts/Sidebar"; // Not NavBarNested, use your Sidebar component
+import NavBarNested from "@/layouts/NavBarNested";
 
 export default function MainLayout({ children, title }) {
   window.can = useAuthorization().can;
 
+  const [navbarOpened, setNavbarOpened] = useState(false);
+
   const { initUserWebSocket } = useWebSockets();
   const { notifications } = usePage().props.auth;
   const { setNotifications } = useNotificationsStore();
-
-  const [navbarOpened, setNavbarOpened] = useState(false);
 
   useEffect(() => {
     initUserWebSocket();
@@ -42,14 +42,12 @@ export default function MainLayout({ children, title }) {
             hiddenFrom="sm"
             size="sm"
           />
-          <Text fw={700} ml="md">
-            Dmm
-          </Text>
+          <Text fw={700} ml="md">Dmm</Text>
         </div>
       </AppShell.Header>
 
       <AppShell.Navbar>
-        <Sidebar navbarOpened={navbarOpened} />
+        <NavBarNested navbarOpened={navbarOpened} />
       </AppShell.Navbar>
 
       <FlashNotification />
