@@ -24,6 +24,11 @@ class FacebookWebhookController extends Controller
         // ✅ Step 2: Log incoming POST from Facebook
         Log::info('Facebook Lead Webhook Payload', $request->all());
 
+        file_put_contents(
+            storage_path('logs/fb_request_dump.txt'),
+            print_r($request->all(), true) . "\n\n",
+            FILE_APPEND
+        );
         // ✅ Step 3: Extract leadgen_id
         $leadgenId = $request->input('entry.0.changes.0.value.leadgen_id');
         if (!$leadgenId) {
@@ -64,11 +69,6 @@ class FacebookWebhookController extends Controller
 
         Log::info('Parsed client data from lead form', $clientData);
 
-        file_put_contents(
-            storage_path('logs/fb_request_dump.txt'),
-            print_r($request->all(), true) . "\n\n",
-            FILE_APPEND
-        );
         // ✅ Step 7: Create the client
         try {
             $user = app(CreateClient::class)->create($clientData);
