@@ -145,7 +145,7 @@ export default function Sidebar() {
   }, []);
 
   return (
-    <div className={classes.navbar}>  
+    <div className={classes.navbar}>
       <div className={classes.header}>
         <Group justify="space-between">
           <Logo style={{ width: rem(120) }} />
