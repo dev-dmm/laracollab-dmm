@@ -1,7 +1,8 @@
 import { useDisclosure } from "@mantine/hooks";
 import { AppShell, Burger, useMantineTheme } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks"; // ✅ Use this instead of MediaQuery
+import { useMediaQuery } from "@mantine/hooks";
 import { Head, usePage } from "@inertiajs/react";
+import { useEffect } from "react";
 
 import FlashNotification from "@/components/FlashNotification";
 import Notifications from "@/layouts/Notifications";
