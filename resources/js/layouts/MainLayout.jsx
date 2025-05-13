@@ -1,10 +1,6 @@
 import { useDisclosure } from "@mantine/hooks";
-import {
-  AppShell,
-  Burger,
-  MediaQuery,
-  useMantineTheme,
-} from "@mantine/core";
+import { AppShell, Burger, useMantineTheme } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks"; // ✅ Use this instead of MediaQuery
 import { Head, usePage } from "@inertiajs/react";
 
 import FlashNotification from "@/components/FlashNotification";
@@ -16,7 +12,9 @@ import NavBarNested from "@/layouts/NavBarNested";
 
 export default function MainLayout({ children, title }) {
   const theme = useMantineTheme();
+  const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
   const [opened, { toggle }] = useDisclosure();
+
   const { initUserWebSocket } = useWebSockets();
   const { notifications } = usePage().props.auth;
   const { setNotifications } = useNotificationsStore();
@@ -36,23 +34,20 @@ export default function MainLayout({ children, title }) {
         breakpoint: "sm",
         collapsed: { mobile: !opened },
       }}
-      header={{
-        height: 60,
-      }}
+      header={{ height: 60 }}
     >
       <Head title={title} />
 
       <AppShell.Header>
-        <MediaQuery largerThan="sm" styles={{ display: "none" }}>
+        {isMobile && (
           <Burger
             opened={opened}
             onClick={toggle}
             size="sm"
             color={theme.colors.gray[6]}
-            mr="xl"
-            style={{ marginLeft: "1rem", marginTop: "1rem" }}
+            style={{ margin: "1rem" }}
           />
-        </MediaQuery>
+        )}
       </AppShell.Header>
 
       <AppShell.Navbar p="md">
