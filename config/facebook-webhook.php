@@ -1,10 +1,8 @@
 <?php
 
-use Illuminate\Support\Str;
-
 return [
 
-        'configs' => [
+    'configs' => [
         [
             /*
              * This package supports multiple webhook receiving endpoints. If you only have
