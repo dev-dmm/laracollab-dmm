@@ -2,11 +2,8 @@
 
 namespace App\Listeners;
 
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-
-use Marshmallow\FacebookWebhook\Events\WebhookReceived;
 use Illuminate\Support\Facades\Log;
+use Marshmallow\FacebookWebhook\Events\WebhookReceived;
 
 class FacebookLeadReceived
 {
