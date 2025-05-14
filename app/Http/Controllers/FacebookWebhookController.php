@@ -27,14 +27,15 @@ class FacebookWebhookController extends Controller
 
         file_put_contents(
             storage_path('logs/fb_request_dump.txt'),
-            print_r($request->all(), true) . "\n\n",
+            print_r($request->all(), true)."\n\n",
             FILE_APPEND
         );
 
         // ✅ Step 3: Extract leadgen_id
         $leadgenId = $request->input('entry.0.changes.0.value.leadgen_id');
-        if (!$leadgenId) {
+        if (! $leadgenId) {
             Log::warning('No leadgen_id found in Facebook webhook');
+
             return response()->json(['error' => 'leadgen_id not found'], 400);
         }
 
@@ -46,18 +47,20 @@ class FacebookWebhookController extends Controller
             'access_token' => $userAccessToken,
         ]);
 
-        if (!$pagesResponse->successful()) {
+        if (! $pagesResponse->successful()) {
             Log::error('❌ Failed to fetch pages from user token', [
                 'error' => $pagesResponse->json(),
             ]);
+
             return response()->json(['error' => 'Could not fetch pages'], 500);
         }
 
         $pages = collect($pagesResponse->json()['data']);
         $page = $pages->firstWhere('id', $pageId);
 
-        if (!$page) {
+        if (! $page) {
             Log::error('❌ Page not found for given PAGE_ID', ['page_id' => $pageId]);
+
             return response()->json(['error' => 'Page not found'], 404);
         }
 
@@ -70,7 +73,7 @@ class FacebookWebhookController extends Controller
             'access_token' => $pageAccessToken,
         ]);
 
-        if (!$response->successful()) {
+        if (! $response->successful()) {
             Log::error('Failed to fetch lead data', [
                 'leadgen_id' => $leadgenId,
                 'error' => $response->json(),
@@ -89,7 +92,7 @@ class FacebookWebhookController extends Controller
         // ✅ Step 7: Prepare data for client creation
         $clientData = [
             'name' => $fields['full_name'] ?? 'FB Lead',
-            'email' => $fields['email'] ?? (Str::uuid() . '@lead.local'),
+            'email' => $fields['email'] ?? (Str::uuid().'@lead.local'),
             'phone' => $fields['phone_number'] ?? null,
             'password' => Str::random(12),
             'avatar' => null,
