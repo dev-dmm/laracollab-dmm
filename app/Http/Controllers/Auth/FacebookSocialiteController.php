@@ -47,12 +47,13 @@ class FacebookSocialiteController
             'email' => $user->getEmail(),
             'user_token' => $user->token,
             'access_type' => 'page',
-            'token_type' => 'short_lived', // ✅ or 'user' or 'page' if that's your convention
+            'token_type' => 'user',
             'facebook_id' => $user->getId(),
             'access_token' => $page['access_token'],
             'page_id' => $page['id'],
             'page_name' => $page['name'],
             'page_token' => $page['access_token'],
+            'expires_at' => now()->addDays(60),
             'updated_at' => now(),
         ]);
 
