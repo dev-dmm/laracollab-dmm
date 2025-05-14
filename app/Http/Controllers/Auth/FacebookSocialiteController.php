@@ -35,7 +35,7 @@ class FacebookSocialiteController
 
         $page = collect($pages)->first();
 
-        if (! $page) {
+        if (!$page) {
             return response()->json(['error' => 'No Facebook page access'], 403);
         }
 
@@ -52,18 +52,18 @@ class FacebookSocialiteController
             'updated_at' => now(),
         ]);
 
-        // Create client (if not exists)
-        if (! DB::table('users')->where('email', $user->getEmail())->exists()) {
-            app(CreateClient::class)->create([
-                'name' => $user->getName(),
-                'email' => $user->getEmail() ?? Str::uuid().'@facebook.local',
-                'phone' => null,
-                'password' => Str::random(12),
-                'avatar' => $user->avatar,
-                'companies' => [],
-            ]);
-        }
+        // ✅ Always try to create (CreateClient handles duplicates now)
+        app(CreateClient::class)->create([
+            'name' => $user->getName(),
+            'email' => $user->getEmail() ?? Str::uuid() . '@facebook.local',
+            'phone' => null,
+            'password' => Str::random(12),
+            'avatar' => $user->avatar,
+            'companies' => [],
+            'source' => 'facebook',          // ✅ Track origin
+            'send_email' => false            // ✅ Don't send email for social login
+        ]);
 
-        return redirect('/dashboard')->with('success', 'Client created & token stored.');
+        return redirect('/dashboard')->with('success', 'Facebook client synced.');
     }
 }
