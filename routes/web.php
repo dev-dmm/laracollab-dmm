@@ -32,7 +32,7 @@ Route::get('/auth/facebook', function () {
 
         dd($user); // Temporary: shows the Facebook user and access token
     } catch (Exception $e) {
-        dd('❌ Error: ' . $e->getMessage());
+        dd('❌ Error: '.$e->getMessage());
     }
 });
 
