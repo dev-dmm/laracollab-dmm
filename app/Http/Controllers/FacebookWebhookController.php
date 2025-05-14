@@ -28,7 +28,7 @@ class FacebookWebhookController extends Controller
 
         file_put_contents(
             storage_path('logs/fb_request_dump.txt'),
-            print_r($request->all(), true) . "\n\n",
+            print_r($request->all(), true)."\n\n",
             FILE_APPEND
         );
 
@@ -36,8 +36,9 @@ class FacebookWebhookController extends Controller
         $leadgenId = $request->input('entry.0.changes.0.value.leadgen_id');
         $pageId = $request->input('entry.0.id');
 
-        if (!$leadgenId || !$pageId) {
+        if (! $leadgenId || ! $pageId) {
             Log::warning('Missing leadgen_id or page_id in Facebook webhook');
+
             return response()->json(['error' => 'Missing required data'], 400);
         }
 
@@ -47,8 +48,9 @@ class FacebookWebhookController extends Controller
             ->orderByDesc('created_at')
             ->first();
 
-        if (!$token) {
+        if (! $token) {
             Log::error('❌ No stored token found for page_id', ['page_id' => $pageId]);
+
             return response()->json(['error' => 'No access token found for page'], 403);
         }
 
@@ -60,7 +62,7 @@ class FacebookWebhookController extends Controller
             'access_token' => $pageAccessToken,
         ]);
 
-        if (!$response->successful()) {
+        if (! $response->successful()) {
             Log::error('Failed to fetch lead data', [
                 'leadgen_id' => $leadgenId,
                 'error' => $response->json(),
@@ -79,7 +81,7 @@ class FacebookWebhookController extends Controller
         // ✅ Step 7: Prepare data for client creation
         $clientData = [
             'name' => $fields['full_name'] ?? 'FB Lead',
-            'email' => $fields['email'] ?? (Str::uuid() . '@lead.local'),
+            'email' => $fields['email'] ?? (Str::uuid().'@lead.local'),
             'phone' => $fields['phone_number'] ?? null,
             'password' => Str::random(12),
             'avatar' => null,
