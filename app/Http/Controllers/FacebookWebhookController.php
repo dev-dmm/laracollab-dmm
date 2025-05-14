@@ -14,7 +14,7 @@ class FacebookWebhookController extends Controller
     {
         // ✅ Step 1: Webhook verification (GET)
         if ($request->isMethod('get')) {
-            $verify_token = 'ASDa123AsdASDA1414asdA'; // Must match what you put in the Meta dashboard
+            $verify_token = env('FACEBOOK_WEBHOOK_VERIFY_TOKEN');
             if ($request->input('hub_verify_token') === $verify_token) {
                 return response($request->input('hub_challenge'), 200);
             }
@@ -40,7 +40,9 @@ class FacebookWebhookController extends Controller
 
         // ✅ Step 4: Fetch lead details from Graph API
         $accessToken = env('FACEBOOK_PAGE_ACCESS_TOKEN');
-        $response = Http::get("https://graph.facebook.com/v22.0/{$leadgenId}", [
+        $version = env('FACEBOOK_GRAPH_API_VERSION', 'v22.0');
+
+        $response = Http::get("https://graph.facebook.com/{$version}/{$leadgenId}", [
             'access_token' => $accessToken,
         ]);
 
