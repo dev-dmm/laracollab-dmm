@@ -71,7 +71,7 @@ const Login = ({ notify }) => {
               loading={socialLoginPending}
               onClick={() => setSocialLoginPending(true)}
             >
-              Facebook
+              Facebook 
             </Button>
           </Group>
 
