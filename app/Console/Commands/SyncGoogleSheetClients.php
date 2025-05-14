@@ -7,19 +7,20 @@ use Google_Service_Sheets;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use App\Actions\Client\CreateClient;
+use App\Models\User;
 
 class SyncGoogleSheetClients extends Command
 {
     protected $signature = 'leads:sync-google';
-
     protected $description = 'Import leads from Google Sheet and create clients';
 
     public function handle()
     {
         $sheetId = env('GOOGLE_SHEET_ID');
-        $range = 'Sheet1'; // Adjust if your tab name is different
+        $range = 'Sheet1';
 
-        $client = new Google_Client;
+        $client = new Google_Client();
         $client->setApplicationName('Laravel Google Sheets');
         $client->setScopes([Google_Service_Sheets::SPREADSHEETS_READONLY]);
         $client->setAuthConfig(storage_path('app/google/service-account.json'));
@@ -30,40 +31,40 @@ class SyncGoogleSheetClients extends Command
 
         if (count($rows) < 2) {
             $this->warn('No data found in sheet.');
-
             return;
         }
 
         $headers = array_map(
-            fn ($h) => strtolower(Str::slug(trim($h), '_')),
+            fn($h) => strtolower(Str::slug(trim($h), '_')),
             $rows[0]
         );
 
         foreach (array_slice($rows, 1) as $row) {
             $data = array_combine($headers, array_pad($row, count($headers), null));
 
-            Log::info('🔍 Parsed Sheet Row', $data); // 👈 Add this
+            Log::info('🧩 Sheet Row Keys', array_keys($data));
+            Log::info('📞 Raw phone input', ['raw' => $data['phone_number'] ?? 'MISSING']);
 
             if (empty($data['email'])) {
                 Log::warning('⛔ Missing email, skipping row');
-
                 continue;
             }
 
-            $exists = \App\Models\User::where('email', $data['email'])->exists();
-
-            if ($exists) {
+            if (User::where('email', $data['email'])->exists()) {
                 Log::warning("⚠️ Duplicate skipped: {$data['email']}");
-
                 continue;
             }
+
+            $cleanPhone = isset($data['phone_number']) 
+                ? preg_replace('/^p:\s*/i', '', trim($data['phone_number'])) 
+                : null;
 
             try {
-                app(\App\Actions\Client\CreateClient::class)->create([
-                    'name' => $data['full name'] ?? 'Sheet Lead', // 👈 make sure this matches your sheet header exactly
+                app(CreateClient::class)->create([
+                    'name' => $data['full_name'] ?? $data['full name'] ?? 'Sheet Lead',
                     'email' => $data['email'],
-                    'phone' => $data['phone_number'] ?? null,
-                    'password' => \Str::random(12),
+                    'phone' => $cleanPhone,
+                    'password' => Str::random(12),
                     'avatar' => null,
                     'companies' => [],
                 ]);
