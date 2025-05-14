@@ -22,6 +22,19 @@ use App\Http\Controllers\Task\TimeLogController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
+
+Route::get('/auth/facebook', function () {
+    try {
+        $user = Socialite::driver('facebook')->stateless()->user();
+
+        logger('✅ Facebook user authenticated:', ['name' => $user->name, 'token' => $user->token]);
+
+        dd($user); // Temporary: shows the Facebook user and access token
+    } catch (Exception $e) {
+        dd('❌ Error: ' . $e->getMessage());
+    }
+});
 
 Route::redirect('/', 'dashboard');
 
