@@ -46,9 +46,10 @@ class FacebookSocialiteController
             'name' => $user->getName(),
             'email' => $user->getEmail(),
             'user_token' => $user->token,
-            'access_type' => 'page', // ✅ Required
-            'facebook_id' => $user->getId(), // ✅ Required
-            'access_token' => $page['access_token'], // ✅ Required
+            'access_type' => 'page',
+            'token_type' => 'short_lived', // ✅ or 'user' or 'page' if that's your convention
+            'facebook_id' => $user->getId(),
+            'access_token' => $page['access_token'],
             'page_id' => $page['id'],
             'page_name' => $page['name'],
             'page_token' => $page['access_token'],
