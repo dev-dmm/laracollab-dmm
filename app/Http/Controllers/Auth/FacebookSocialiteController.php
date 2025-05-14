@@ -1,0 +1,70 @@
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Actions\Client\CreateClient;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
+use Laravel\Socialite\Facades\Socialite;
+
+class FacebookSocialiteController
+{
+    public function redirect()
+    {
+        return Socialite::driver('facebook')
+            ->scopes([
+                'email',
+                'pages_show_list',
+                'pages_read_engagement',
+                'leads_retrieval',
+                'pages_manage_ads',
+            ])
+            ->stateless()
+            ->redirect();
+    }
+
+    public function callback()
+    {
+        $user = Socialite::driver('facebook')->stateless()->user();
+
+        // Fetch page token
+        $pages = Http::get('https://graph.facebook.com/v22.0/me/accounts', [
+            'access_token' => $user->token,
+        ])->json()['data'];
+
+        $page = collect($pages)->first();
+
+        if (!$page) {
+            return response()->json(['error' => 'No Facebook page access'], 403);
+        }
+
+        // Save user + page token
+        DB::table('facebook_tokens')->updateOrInsert([
+            'facebook_user_id' => $user->getId(),
+        ], [
+            'name' => $user->getName(),
+            'email' => $user->getEmail(),
+            'user_token' => $user->token,
+            'page_id' => $page['id'],
+            'page_name' => $page['name'],
+            'page_token' => $page['access_token'],
+            'updated_at' => now(),
+        ]);
+
+        // Create client (if not exists)
+        if (!DB::table('users')->where('email', $user->getEmail())->exists()) {
+            app(CreateClient::class)->create([
+                'name' => $user->getName(),
+                'email' => $user->getEmail() ?? Str::uuid() . '@facebook.local',
+                'phone' => null,
+                'password' => Str::random(12),
+                'avatar' => $user->avatar,
+                'companies' => [],
+            ]);
+        }
+
+        return redirect('/dashboard')->with('success', 'Client created & token stored.');
+    }
+}

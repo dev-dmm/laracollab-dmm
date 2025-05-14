@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\Client\CreateClient;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -31,41 +32,30 @@ class FacebookWebhookController extends Controller
             FILE_APPEND
         );
 
-        // ✅ Step 3: Extract leadgen_id
+        // ✅ Step 3: Extract leadgen_id and page_id
         $leadgenId = $request->input('entry.0.changes.0.value.leadgen_id');
-        if (!$leadgenId) {
-            Log::warning('No leadgen_id found in Facebook webhook');
-            return response()->json(['error' => 'leadgen_id not found'], 400);
+        $pageId = $request->input('entry.0.id');
+
+        if (!$leadgenId || !$pageId) {
+            Log::warning('Missing leadgen_id or page_id in Facebook webhook');
+            return response()->json(['error' => 'Missing required data'], 400);
         }
 
-        // ✅ Step 4: Get user token and fetch page token
-        $userAccessToken = env('FACEBOOK_USER_ACCESS_TOKEN'); // <-- must be set from Socialite output
-        $pageId = env('FACEBOOK_PAGE_ID');
+        // ✅ Step 4: Fetch token from database
+        $token = DB::table('facebook_tokens')
+            ->where('page_id', $pageId)
+            ->orderByDesc('created_at')
+            ->first();
 
-        $pagesResponse = Http::get('https://graph.facebook.com/v22.0/me/accounts', [
-            'access_token' => $userAccessToken,
-        ]);
-
-        if (!$pagesResponse->successful()) {
-            Log::error('❌ Failed to fetch pages from user token', [
-                'error' => $pagesResponse->json(),
-            ]);
-            return response()->json(['error' => 'Could not fetch pages'], 500);
+        if (!$token) {
+            Log::error('❌ No stored token found for page_id', ['page_id' => $pageId]);
+            return response()->json(['error' => 'No access token found for page'], 403);
         }
 
-        $pages = collect($pagesResponse->json()['data']);
-        $page = $pages->firstWhere('id', $pageId);
-
-        if (!$page) {
-            Log::error('❌ Page not found for given PAGE_ID', ['page_id' => $pageId]);
-            return response()->json(['error' => 'Page not found'], 404);
-        }
-
-        $pageAccessToken = $page['access_token'];
-
-        // ✅ Step 5: Fetch lead details
+        $pageAccessToken = $token->page_token;
         $version = env('FACEBOOK_GRAPH_API_VERSION', 'v22.0');
 
+        // ✅ Step 5: Fetch lead details
         $response = Http::get("https://graph.facebook.com/{$version}/{$leadgenId}", [
             'access_token' => $pageAccessToken,
         ]);

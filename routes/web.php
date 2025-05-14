@@ -23,6 +23,7 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\Auth\FacebookSocialiteController;
 
 Route::get('/auth/facebook', function () {
     try {
@@ -35,6 +36,9 @@ Route::get('/auth/facebook', function () {
         dd('❌ Error: '.$e->getMessage());
     }
 });
+
+Route::get('/auth/facebook', [FacebookSocialiteController::class, 'redirect']);
+Route::get('/auth/facebook/callback', [FacebookSocialiteController::class, 'callback']);
 
 Route::redirect('/', 'dashboard');
 
