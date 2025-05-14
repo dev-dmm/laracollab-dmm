@@ -23,6 +23,7 @@ class UserService
         // ✅ 1. Uploaded via form
         if ($avatar instanceof UploadedFile) {
             $avatar->storePubliclyAs('public/avatars', $filename);
+
             return "/storage/avatars/{$filename}";
         }
 
@@ -31,6 +32,7 @@ class UserService
             try {
                 $contents = Http::timeout(10)->get($avatar)->body();
                 File::put($storagePath, $contents);
+
                 return "/storage/avatars/{$filename}";
             } catch (\Exception $e) {
                 return null;
@@ -47,6 +49,7 @@ class UserService
                 return "/storage/avatars/{$filename}";
             } else {
                 File::delete($storagePath);
+
                 return null;
             }
         } catch (\Exception $e) {
