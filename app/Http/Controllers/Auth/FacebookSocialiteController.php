@@ -43,7 +43,7 @@ class FacebookSocialiteController
         DB::table('facebook_tokens')->updateOrInsert([
             'facebook_user_id' => $user->getId(),
         ], [
-            'user_id' => $createdUser->id, 
+            'user_id' => $createdUser->id,
             'name' => $user->getName(),
             'email' => $user->getEmail(),
             'user_token' => $user->token,
