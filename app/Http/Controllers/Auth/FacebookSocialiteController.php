@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Actions\Client\CreateClient;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 
 class FacebookSocialiteController
@@ -36,7 +35,7 @@ class FacebookSocialiteController
 
         $page = collect($pages)->first();
 
-        if (!$page) {
+        if (! $page) {
             return response()->json(['error' => 'No Facebook page access'], 403);
         }
 
@@ -54,10 +53,10 @@ class FacebookSocialiteController
         ]);
 
         // Create client (if not exists)
-        if (!DB::table('users')->where('email', $user->getEmail())->exists()) {
+        if (! DB::table('users')->where('email', $user->getEmail())->exists()) {
             app(CreateClient::class)->create([
                 'name' => $user->getName(),
-                'email' => $user->getEmail() ?? Str::uuid() . '@facebook.local',
+                'email' => $user->getEmail() ?? Str::uuid().'@facebook.local',
                 'phone' => null,
                 'password' => Str::random(12),
                 'avatar' => $user->avatar,

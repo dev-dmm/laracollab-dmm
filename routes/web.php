@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Account\NotificationController;
 use App\Http\Controllers\Account\ProfileController;
+use App\Http\Controllers\Auth\FacebookSocialiteController;
 use App\Http\Controllers\Client\ClientCompanyController;
 use App\Http\Controllers\Client\ClientUserController;
 use App\Http\Controllers\DashboardController;
@@ -23,7 +24,6 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
-use App\Http\Controllers\Auth\FacebookSocialiteController;
 
 Route::get('/auth/facebook', function () {
     try {
