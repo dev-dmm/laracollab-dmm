@@ -10,7 +10,8 @@ export default function FilterButton({ selected, children, ...props }) {
       radius="md"
       justify="flex-start"
       size="xs"
-      fullWidth
+      px="md"
+      fullWidth={false} // ensures it doesn't stretch
       leftSection={
         <IconCheck
           stroke={2}
@@ -24,7 +25,7 @@ export default function FilterButton({ selected, children, ...props }) {
           }}
         />
       }
-      style={{ height: rem(32) }}
+      style={{ height: rem(32), whiteSpace: "nowrap" }}
       {...props}
     >
       {children}

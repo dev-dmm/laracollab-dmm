@@ -15,6 +15,8 @@ use App\Observers\ProjectObserver;
 use App\Observers\TaskObserver;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use Marshmallow\FacebookWebhook\Events\WebhookReceived;
+use App\Listeners\FacebookLeadReceived;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -32,6 +34,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         CommentCreated::class => [
             NotifyTaskSubscribers::class,
+        ],
+        WebhookReceived::class => [
+            FacebookLeadReceived::class,
         ],
     ];
 

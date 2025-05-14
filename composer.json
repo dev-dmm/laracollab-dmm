@@ -20,9 +20,11 @@
         "laravel/socialite": "^5.15",
         "laravel/tinker": "^2.9",
         "laraveldaily/laravel-invoices": "^4.0",
+        "marshmallow/laravel-facebook-webhook": "^2.3",
         "overtrue/laravel-favorite": "^5.2",
         "owen-it/laravel-auditing": "^13.6",
         "pusher/pusher-php-server": "^7.2",
+        "socialiteproviders/zoho": "^4.1",
         "spatie/eloquent-sortable": "^4.4",
         "spatie/laravel-permission": "^6.9",
         "tightenco/ziggy": "^2.3"

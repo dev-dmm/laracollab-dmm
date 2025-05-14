@@ -36,12 +36,11 @@ const ProjectsIndex = () => {
     <>
       <Grid justify="space-between" align="center">
         <Grid.Col span="auto">
-          <Group gap="sm">
+          <Group gap="sm" align="center" wrap="nowrap">
             <SearchInput placeholder="Search projects" search={search} />
             {isAdmin() && <ArchivedFilterButton />}
 
-            {/* ✅ FILTER BUTTONS */}
-            <Group gap={4}>
+            <Group gap={4} wrap="nowrap">
               <FilterButton
                 selected={statusFilter === "all"}
                 onClick={() => setStatusFilter("all")}
