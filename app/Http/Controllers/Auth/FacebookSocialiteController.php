@@ -35,7 +35,7 @@ class FacebookSocialiteController
 
         $page = collect($pages)->first();
 
-        if (!$page) {
+        if (! $page) {
             return response()->json(['error' => 'No Facebook page access'], 403);
         }
 
@@ -55,13 +55,13 @@ class FacebookSocialiteController
         // ✅ Always try to create (CreateClient handles duplicates now)
         app(CreateClient::class)->create([
             'name' => $user->getName(),
-            'email' => $user->getEmail() ?? Str::uuid() . '@facebook.local',
+            'email' => $user->getEmail() ?? Str::uuid().'@facebook.local',
             'phone' => null,
             'password' => Str::random(12),
             'avatar' => $user->avatar,
             'companies' => [],
             'source' => 'facebook',          // ✅ Track origin
-            'send_email' => false            // ✅ Don't send email for social login
+            'send_email' => false,            // ✅ Don't send email for social login
         ]);
 
         return redirect('/dashboard')->with('success', 'Facebook client synced.');

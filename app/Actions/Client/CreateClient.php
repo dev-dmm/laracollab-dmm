@@ -32,19 +32,19 @@ class CreateClient
 
             // ✅ Set avatar if provided
             $user->update([
-                'avatar' => UserService::storeOrFetchAvatar($user, $data['avatar'])
+                'avatar' => UserService::storeOrFetchAvatar($user, $data['avatar']),
             ]);
 
             // ✅ Assign "client" role
             $user->assignRole('client');
 
             // ✅ Attach to companies if passed
-            if (!empty($data['companies'])) {
+            if (! empty($data['companies'])) {
                 $user->clientCompanies()->attach($data['companies']);
             }
 
             // ✅ Send welcome email unless explicitly skipped
-            if (!isset($data['send_email']) || $data['send_email'] !== false) {
+            if (! isset($data['send_email']) || $data['send_email'] !== false) {
                 UserCreated::dispatch($user, $data['password']);
             }
 
