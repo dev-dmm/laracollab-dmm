@@ -37,7 +37,7 @@ Route::get('/auth/facebook', function () {
     }
 });
 
-Route::get('/auth/facebook', [FacebookSocialiteController::class, 'redirect']);
+Route::get('/auth/facebook', [FacebookSocialiteController::class, 'redirect'])->name('auth.login.social.facebook');
 Route::get('/auth/facebook/callback', [FacebookSocialiteController::class, 'callback']);
 
 Route::redirect('/', 'dashboard');

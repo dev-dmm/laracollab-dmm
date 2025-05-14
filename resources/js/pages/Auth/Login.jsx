@@ -17,6 +17,7 @@ import { useForm } from "laravel-precognition-react-inertia";
 import { useEffect, useRef, useState } from "react";
 import LoginNotification from "./LoginNotification";
 import classes from "./css/Login.module.css";
+import FacebookIcon from "@/icons/FacebookIcon";
 
 const Login = ({ notify }) => {
   const [socialLoginPending, setSocialLoginPending] = useState(false);
@@ -59,6 +60,18 @@ const Login = ({ notify }) => {
               onClick={() => setSocialLoginPending(true)}
             >
               Google
+            </Button>
+
+            <Button
+              leftSection={<FacebookIcon />}
+              color="blue"
+              radius="xl"
+              component="a"
+              href={route("auth.login.social.facebook")} // 👈 You must define this route
+              loading={socialLoginPending}
+              onClick={() => setSocialLoginPending(true)}
+            >
+              Facebook
             </Button>
           </Group>
 
