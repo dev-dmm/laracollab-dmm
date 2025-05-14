@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     public function up(): void
     {
         Schema::table('facebook_tokens', function (Blueprint $table) {
@@ -21,7 +22,7 @@ return new class extends Migration {
     {
         Schema::table('facebook_tokens', function (Blueprint $table) {
             $table->dropColumn([
-                'name', 'email', 'user_token', 'page_id', 'page_name', 'page_token'
+                'name', 'email', 'user_token', 'page_id', 'page_name', 'page_token',
             ]);
         });
     }
