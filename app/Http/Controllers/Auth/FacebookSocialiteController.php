@@ -67,7 +67,7 @@ class FacebookSocialiteController
             'avatar' => $user->avatar,
             'companies' => [],
             'source' => 'facebook',          // ✅ Track origin
-            'send_email' => false,            // ✅ Don't send email for social login
+            'send_email' => false,  
         ]);
 
         return redirect('/dashboard')->with('success', 'Facebook client synced.');

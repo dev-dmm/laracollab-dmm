@@ -71,6 +71,7 @@ class SyncGoogleSheetClients extends Command
                     'password' => Str::random(12),
                     'avatar' => null,
                     'companies' => [],
+                    'send_email' => false,
                 ]);
 
                 Log::info("✅ Client created: {$data['email']}");
