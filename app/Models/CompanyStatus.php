@@ -15,4 +15,3 @@ class CompanyStatus extends Model
         return $this->hasMany(ClientCompany::class, 'status_id');
     }
 }
-

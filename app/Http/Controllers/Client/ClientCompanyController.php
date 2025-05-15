@@ -108,7 +108,7 @@ class ClientCompanyController extends Controller
             'projects',
             'projects.activities' => fn ($query) => $query->latest()->limit(10),
             'country',
-            'status', 
+            'status',
         ]);
 
         // Flatten all activities from projects
