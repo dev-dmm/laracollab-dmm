@@ -20,8 +20,8 @@ const CompanyShow = () => {
         <Card withBorder p="lg" radius="md" w={340}>
           <Group justify="space-between" mb="xs">
             <Title order={3}>{item.name}</Title>
-            <Badge color={item.status === 'inactive' ? 'red' : 'green'} variant="light">
-              {item.status?.toUpperCase()}
+            <Badge color={item.status?.color || 'gray'} variant="light">
+              {item.status?.label || 'Unknown'}
             </Badge>
           </Group>
 
