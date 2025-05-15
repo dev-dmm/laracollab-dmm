@@ -3,8 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Actions\Client\CreateClient;
+use App\Models\ClientCompany;
+use App\Models\ClientLead;
 use App\Models\User;
-use App\Models\ClientLead; // new model to track dynamic lead metadata
 use Google_Client;
 use Google_Service_Sheets;
 use Illuminate\Console\Command;
@@ -15,7 +16,7 @@ class SyncGoogleSheetClients extends Command
 {
     protected $signature = 'leads:sync-google';
 
-    protected $description = 'Import leads from Google Sheet and create clients with dynamic metadata';
+    protected $description = 'Import leads from Google Sheet and create clients with dynamic metadata and companies';
 
     public function handle()
     {
@@ -55,7 +56,6 @@ class SyncGoogleSheetClients extends Command
                 ? preg_replace('/^p:\s*/i', '', trim($data['phone_number']))
                 : null;
 
-            // Check or create user
             $user = User::firstOrCreate([
                 'email' => $email
             ], [
@@ -66,18 +66,13 @@ class SyncGoogleSheetClients extends Command
                 'job_title' => 'Client',
             ]);
 
-            
-            if (! $user->hasRole('client')) {
-                $user->assignRole('client');
-            }
+            $user->assignRole('client');
 
-            // Skip creating duplicate metadata for existing users
             if (ClientLead::where('client_id', $user->id)->exists()) {
                 Log::info("🔁 Lead metadata already exists for {$email}, skipping");
                 continue;
             }
 
-            // Save remaining sheet fields to metadata
             $metadata = collect($data)->except(['email', 'full_name', 'full name', 'phone_number']);
 
             ClientLead::create([
@@ -85,7 +80,18 @@ class SyncGoogleSheetClients extends Command
                 'metadata' => $metadata,
             ]);
 
-            Log::info("✅ Client created and metadata saved: {$email}");
+            $companyName = $data['poia_inai_i_onomasia_tis_epikhirisis_sas'] ?? "{$user->name}'s company";
+
+            // Check if this user is already linked to a company
+            $alreadyHasCompany = $user->clientCompanies()->exists();
+
+            if (! $alreadyHasCompany) {
+                $company = ClientCompany::create([
+                    'name' => $companyName,
+                ]);
+
+                $company->clients()->attach($user->id);
+            }
         }
 
         $this->info('✅ Sync complete.');

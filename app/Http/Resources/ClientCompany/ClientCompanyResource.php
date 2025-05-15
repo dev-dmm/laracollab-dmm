@@ -21,8 +21,14 @@ class ClientCompanyResource extends JsonResource
             'address' => $this->address,
             'postal_code' => $this->postal_code,
             'city' => $this->city,
-            'country_id' => $this->country_id,
-            'currency_id' => $this->currency_id,
+            'country' => $this->whenLoaded('country', fn () => [
+                'id' => $this->country->id ?? null,
+                'name' => $this->country->name ?? null,
+            ]),
+            'currency' => $this->whenLoaded('currency', fn () => [
+                'id' => $this->currency->id ?? null,
+                'name' => $this->currency->name ?? null,
+            ]),
             'phone' => $this->phone,
             'web' => $this->web,
             'iban' => $this->iban,

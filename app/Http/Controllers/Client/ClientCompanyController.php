@@ -90,4 +90,14 @@ class ClientCompanyController extends Controller
 
         return redirect()->back()->success('Company restored', 'The restoring of the company was completed successfully.');
     }
+
+    public function show(ClientCompany $company)
+    {
+        $company->load(['country', 'currency']);
+
+        return Inertia::render('Clients/Companies/Show', [
+            'item' => new ClientCompanyResource($company),
+        ]);
+    }
+
 }

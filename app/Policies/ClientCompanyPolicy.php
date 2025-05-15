@@ -46,4 +46,10 @@ class ClientCompanyPolicy
     {
         return $user->hasPermissionTo('restore client company');
     }
+
+    public function view(User $user, ClientCompany $company): bool
+    {
+        return $user->hasPermissionTo('view client companies');
+    }
+    
 }
