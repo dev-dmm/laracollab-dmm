@@ -28,6 +28,10 @@ export default function TableRow({ item }) {
         </Text>
       </Table.Td>
       <Table.Td>
+        <Text fz="sm">{item.phone || "—"}</Text>
+        <Text fz="xs" c="dimmed">Phone</Text>
+      </Table.Td>
+      <Table.Td>
         <Group gap="sm">
           {item.companies.map((item) => (
             <Link href={route("clients.companies.edit", item.id)} key={item.id}>
