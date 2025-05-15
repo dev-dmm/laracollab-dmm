@@ -44,9 +44,9 @@ class CreateClient
             }
 
             // ✅ Send welcome email unless explicitly skipped
-            // if (! isset($data['send_email']) || $data['send_email'] !== false) {
-            //     UserCreated::dispatch($user, $data['password']);
-            // }
+            if (! isset($data['send_email']) || $data['send_email'] !== false) {
+                UserCreated::dispatch($user, $data['password']);
+            }
 
             return $user;
         });
