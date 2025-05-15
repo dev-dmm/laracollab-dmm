@@ -99,5 +99,4 @@ class ClientCompanyController extends Controller
             'item' => new ClientCompanyResource($company),
         ]);
     }
-
 }

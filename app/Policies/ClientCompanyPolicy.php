@@ -51,5 +51,4 @@ class ClientCompanyPolicy
     {
         return $user->hasPermissionTo('view client companies');
     }
-    
 }
