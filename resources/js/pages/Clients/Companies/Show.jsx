@@ -82,12 +82,18 @@ const CompanyShow = () => {
               <Title order={4} mt="lg" mb="sm">Recent Projects</Title>
               {item.projects.length ? (
                 item.projects.map((project) => (
+                  <Anchor
+                    key={project.id}
+                    href={route('projects.tasks', project.id)}
+                    style={{ textDecoration: 'none' }}
+                  >
                   <Card key={project.id} withBorder mb="sm">
                     <Text fw={500}>{project.name}</Text>
                     <Text fz="xs" c="dimmed">
                       Created at: {new Date(project.created_at).toLocaleDateString()}
                     </Text>
                   </Card>
+                 </Anchor>
                 ))
               ) : (
                 <Text c="dimmed" fz="sm">No projects found for this company.</Text>
@@ -109,12 +115,18 @@ const CompanyShow = () => {
             <Tabs.Panel value="projects" pt="md">
               {item.projects.length ? (
                 item.projects.map((project) => (
-                  <Card key={project.id} withBorder mb="sm">
-                    <Text fw={500}>{project.name}</Text>
-                    <Text fz="xs" c="dimmed">
-                      Created at: {new Date(project.created_at).toLocaleDateString()}
-                    </Text>
-                  </Card>
+                  <Anchor
+                    key={project.id}
+                    href={route('projects.tasks', project.id)}
+                    style={{ textDecoration: 'none' }}
+                  >
+                    <Card withBorder mb="sm" style={{ cursor: 'pointer' }}>
+                      <Text fw={500}>{project.name}</Text>
+                      <Text fz="xs" c="dimmed">
+                        Created at: {new Date(project.created_at).toLocaleDateString()}
+                      </Text>
+                    </Card>
+                  </Anchor>
                 ))
               ) : (
                 <Text c="dimmed" fz="sm">No projects found for this company.</Text>
