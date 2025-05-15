@@ -2,17 +2,18 @@
 
 namespace App\Console\Commands;
 
+use App\Actions\Client\CreateClient;
+use App\Models\User;
 use Google_Client;
 use Google_Service_Sheets;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use App\Actions\Client\CreateClient;
-use App\Models\User;
 
 class SyncGoogleSheetClients extends Command
 {
     protected $signature = 'leads:sync-google';
+
     protected $description = 'Import leads from Google Sheet and create clients';
 
     public function handle()
@@ -20,7 +21,7 @@ class SyncGoogleSheetClients extends Command
         $sheetId = config('services.google.sheet_id');
         $range = 'Sheet1';
 
-        $client = new Google_Client();
+        $client = new Google_Client;
         $client->setApplicationName('Laravel Google Sheets');
         $client->setScopes([Google_Service_Sheets::SPREADSHEETS_READONLY]);
         $client->setAuthConfig(storage_path('app/google/service-account.json'));
@@ -31,11 +32,12 @@ class SyncGoogleSheetClients extends Command
 
         if (count($rows) < 2) {
             $this->warn('No data found in sheet.');
+
             return;
         }
 
         $headers = array_map(
-            fn($h) => strtolower(Str::slug(trim($h), '_')),
+            fn ($h) => strtolower(Str::slug(trim($h), '_')),
             $rows[0]
         );
 
@@ -47,16 +49,18 @@ class SyncGoogleSheetClients extends Command
 
             if (empty($data['email'])) {
                 Log::warning('⛔ Missing email, skipping row');
+
                 continue;
             }
 
             if (User::where('email', $data['email'])->exists()) {
                 Log::warning("⚠️ Duplicate skipped: {$data['email']}");
+
                 continue;
             }
 
-            $cleanPhone = isset($data['phone_number']) 
-                ? preg_replace('/^p:\s*/i', '', trim($data['phone_number'])) 
+            $cleanPhone = isset($data['phone_number'])
+                ? preg_replace('/^p:\s*/i', '', trim($data['phone_number']))
                 : null;
 
             try {
