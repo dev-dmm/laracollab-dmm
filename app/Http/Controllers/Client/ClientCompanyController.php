@@ -9,13 +9,13 @@ use App\Http\Requests\ClientCompany\StoreClientCompanyRequest;
 use App\Http\Requests\ClientCompany\UpdateClientCompanyRequest;
 use App\Http\Resources\ClientCompany\ClientCompanyResource;
 use App\Models\ClientCompany;
+use App\Models\CompanyStatus;
 use App\Models\Country;
 use App\Models\Currency;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use App\Models\CompanyStatus;
 
 class ClientCompanyController extends Controller
 {
