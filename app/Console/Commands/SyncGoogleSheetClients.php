@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Actions\Client\CreateClient;
-use App\Models\User;
-use App\Models\ClientLead; // new model to track dynamic lead metadata
+use App\Models\ClientLead;
+use App\Models\User; // new model to track dynamic lead metadata
 use Google_Client;
 use Google_Service_Sheets;
 use Illuminate\Console\Command;
@@ -33,6 +32,7 @@ class SyncGoogleSheetClients extends Command
 
         if (count($rows) < 2) {
             $this->warn('No data found in sheet.');
+
             return;
         }
 
@@ -47,6 +47,7 @@ class SyncGoogleSheetClients extends Command
             $email = $data['email'] ?? null;
             if (empty($email)) {
                 Log::warning('⛔ Missing email, skipping row');
+
                 continue;
             }
 
@@ -57,7 +58,7 @@ class SyncGoogleSheetClients extends Command
 
             // Check or create user
             $user = User::firstOrCreate([
-                'email' => $email
+                'email' => $email,
             ], [
                 'name' => $name,
                 'phone' => $cleanPhone,
@@ -66,7 +67,6 @@ class SyncGoogleSheetClients extends Command
                 'job_title' => 'Client',
             ]);
 
-            
             if (! $user->hasRole('client')) {
                 $user->assignRole('client');
             }
@@ -74,6 +74,7 @@ class SyncGoogleSheetClients extends Command
             // Skip creating duplicate metadata for existing users
             if (ClientLead::where('client_id', $user->id)->exists()) {
                 Log::info("🔁 Lead metadata already exists for {$email}, skipping");
+
                 continue;
             }
 
