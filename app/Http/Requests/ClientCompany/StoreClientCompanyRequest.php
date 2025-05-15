@@ -37,6 +37,7 @@ class StoreClientCompanyRequest extends FormRequest
             'tax_id' => 'string|nullable',
             'vat' => 'string|nullable',
             'clients' => 'array|nullable',
+            'status_id' => ['required', 'exists:company_statuses,id'],
         ];
     }
 }

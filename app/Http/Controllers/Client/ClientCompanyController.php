@@ -29,7 +29,7 @@ class ClientCompanyController extends Controller
             'items' => ClientCompanyResource::collection(
                 ClientCompany::searchByQueryString()
                     ->sortByQueryString()
-                    ->with(['clients', 'currency'])
+                    ->with(['clients', 'currency', 'status'])
                     ->when($request->has('archived'), fn ($query) => $query->onlyArchived())
                     ->paginate(12)
             ),
@@ -38,11 +38,15 @@ class ClientCompanyController extends Controller
 
     public function create()
     {
+        $defaultCurrencyId = Currency::where('code', 'EUR')->value('id');
+
         return Inertia::render('Clients/Companies/Create', [
             'dropdowns' => [
                 'clients' => User::clientDropdownValues(),
                 'countries' => Country::dropdownValues(),
                 'currencies' => Currency::dropdownValues(),
+                'statuses' => CompanyStatus::select('id', 'label')->get(),
+                'defaultCurrencyId' => (string) $defaultCurrencyId,
             ],
         ]);
     }
@@ -56,12 +60,16 @@ class ClientCompanyController extends Controller
 
     public function edit(ClientCompany $company)
     {
+        $company->load(['status']); // ✅ Add this
+
         return Inertia::render('Clients/Companies/Edit', [
             'item' => new ClientCompanyResource($company),
             'dropdowns' => [
                 'clients' => User::clientDropdownValues(),
                 'countries' => Country::dropdownValues(),
                 'currencies' => Currency::dropdownValues(),
+                'statuses' => CompanyStatus::select('id', 'label')->get(),
+                'defaultCurrencyId' => (string) $defaultCurrencyId,
             ],
         ]);
     }
@@ -100,6 +108,7 @@ class ClientCompanyController extends Controller
             'projects',
             'projects.activities' => fn ($query) => $query->latest()->limit(10),
             'country',
+            'status', 
         ]);
 
         // Flatten all activities from projects

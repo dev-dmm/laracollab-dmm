@@ -34,7 +34,7 @@ export default function TableRow({ item }) {
       <Table.Td>
         <Group gap="sm">
           {item.companies.map((item) => (
-            <Link href={route("clients.companies.edit", item.id)} key={item.id}>
+            <Link href={route("clients.companies.show", item.id)} key={item.id}>
               <Badge variant="light" color="grape" tt="unset">
                 {item.name}
               </Badge>

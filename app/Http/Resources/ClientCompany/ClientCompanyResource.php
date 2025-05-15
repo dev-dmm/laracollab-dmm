@@ -12,6 +12,12 @@ class ClientCompanyResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
+            'status' => $this->status ? [
+                'id' => $this->status->id,
+                'name' => $this->status->name,
+                'label' => $this->status->label,
+                'color' => $this->status->color,
+            ] : null,
             'phone' => $this->phone,
             'address' => $this->address,
             'city' => $this->city,

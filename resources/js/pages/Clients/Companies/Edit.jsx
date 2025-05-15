@@ -20,7 +20,7 @@ import {
 const ClientCompanyEdit = () => {
   const {
     item,
-    dropdowns: { clients, countries, currencies },
+    dropdowns: { clients, countries, currencies, defaultCurrencyId },
   } = usePage().props;
   const [form, submit, updateValue] = useForm('post', route('clients.companies.update', item.id), {
     _method: 'put',
@@ -81,12 +81,11 @@ const ClientCompanyEdit = () => {
           />
 
           <Select
-            label='Default currency'
-            placeholder='Select currency'
-            required
-            mt='md'
+            label="Default currency"
+            placeholder="Select currency"
+            mt="md"
             searchable={true}
-            value={form.data.currency_id?.toString()}
+            value={form.data.currency_id?.toString() || defaultCurrencyId?.toString()}
             onChange={value => updateValue('currency_id', value)}
             data={currencies}
             error={form.errors.currency_id}
@@ -101,6 +100,19 @@ const ClientCompanyEdit = () => {
             onChange={values => updateValue('clients', values)}
             data={clients}
             error={form.errors.clients}
+          />
+
+          <Select
+            label="Status"
+            placeholder="Select status"
+            mt="md"
+            data={[
+              { value: 'active', label: 'Active' },
+              { value: 'inactive', label: 'Inactive' },
+            ]}
+            value={form.data.status}
+            onChange={value => updateValue('status', value)}
+            error={form.errors.status}
           />
 
           <Fieldset

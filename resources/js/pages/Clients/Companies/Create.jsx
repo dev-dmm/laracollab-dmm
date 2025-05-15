@@ -19,7 +19,7 @@ import {
 
 const ClientCompanyCreate = () => {
   const {
-    dropdowns: { clients, countries, currencies },
+    dropdowns: { clients, countries, currencies, defaultCurrencyId },
   } = usePage().props;
   const [form, submit, updateValue] = useForm('post', route('clients.companies.store'), {
     name: '',
@@ -27,7 +27,7 @@ const ClientCompanyCreate = () => {
     postal_code: '',
     city: '',
     country_id: '',
-    currency_id: '',
+    currency_id: defaultCurrencyId || '', // 👈 prefill euro
     email: '',
     phone: '',
     web: '',
@@ -99,6 +99,17 @@ const ClientCompanyCreate = () => {
             onChange={values => updateValue('clients', values)}
             data={clients}
             error={form.errors.clients}
+          />
+
+          <Select
+            label="Default currency"
+            placeholder="Select currency"
+            mt="md"
+            searchable
+            value={form.data.currency_id}
+            onChange={value => updateValue('currency_id', value)}
+            data={currencies}
+            error={form.errors.currency_id}
           />
 
           <Fieldset

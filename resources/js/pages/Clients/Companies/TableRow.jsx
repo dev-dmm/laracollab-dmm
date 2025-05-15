@@ -29,6 +29,16 @@ export default function TableRow({ item }) {
       </Table.Td>
 
       <Table.Td>
+        {item.status ? (
+          <Badge variant="light" color={item.status.color || "gray"} tt="unset">
+            {item.status.label}
+          </Badge>
+        ) : (
+          <Badge variant="light" color="gray">Unknown</Badge>
+        )}
+      </Table.Td>
+
+      <Table.Td>
         <Group gap="xs">
           <Button
             size="xs"

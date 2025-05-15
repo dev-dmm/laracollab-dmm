@@ -32,6 +32,7 @@ class ClientCompany extends Model implements AuditableContract
         'business_id',
         'tax_id',
         'vat',
+        'status_id',
     ];
 
     protected $searchable = [
@@ -76,5 +77,10 @@ class ClientCompany extends Model implements AuditableContract
             ->get(['id', 'name'])
             ->map(fn ($i) => ['value' => (string) $i->id, 'label' => $i->name])
             ->toArray();
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(CompanyStatus::class, 'status_id');
     }
 }
