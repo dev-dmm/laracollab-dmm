@@ -27,7 +27,7 @@ const ClientCompanyCreate = () => {
     postal_code: '',
     city: '',
     country_id: '',
-    currency_id: defaultCurrencyId || '', // 👈 prefill euro
+    currency_id: defaultCurrencyId || '',
     email: '',
     phone: '',
     web: '',
@@ -37,6 +37,7 @@ const ClientCompanyCreate = () => {
     tax_id: '',
     vat: '',
     clients: route().params?.client_id ? [route().params.client_id] : [],
+    status_id: '', 
   });
 
   return (
@@ -110,6 +111,19 @@ const ClientCompanyCreate = () => {
             onChange={value => updateValue('currency_id', value)}
             data={currencies}
             error={form.errors.currency_id}
+          />
+
+          <Select
+            label="Status"
+            placeholder="Select status"
+            mt="md"
+            data={dropdowns.statuses.map(status => ({
+              value: status.id.toString(),
+              label: status.label
+            }))}
+            value={form.data.status_id?.toString()}
+            onChange={value => updateValue('status_id', value)}
+            error={form.errors.status_id}
           />
 
           <Fieldset

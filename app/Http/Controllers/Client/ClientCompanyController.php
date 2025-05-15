@@ -48,6 +48,7 @@ class ClientCompanyController extends Controller
                 'currencies' => Currency::dropdownValues(),
                 'statuses' => CompanyStatus::select('id', 'label')->get(),
                 'defaultCurrencyId' => (string) $defaultCurrencyId,
+                'statuses' => CompanyStatus::select('id', 'label')->get(),
             ],
         ]);
     }
@@ -63,6 +64,8 @@ class ClientCompanyController extends Controller
     {
         $company->load(['status']); // ✅ Add this
 
+        $defaultCurrencyId = Currency::where('code', 'EUR')->value('id');
+
         return Inertia::render('Clients/Companies/Edit', [
             'item' => new ClientCompanyResource($company),
             'dropdowns' => [
@@ -70,6 +73,7 @@ class ClientCompanyController extends Controller
                 'countries' => Country::dropdownValues(),
                 'currencies' => Currency::dropdownValues(),
                 'statuses' => CompanyStatus::select('id', 'label')->get(),
+                'defaultCurrencyId' => (string) $defaultCurrencyId,
             ],
         ]);
     }

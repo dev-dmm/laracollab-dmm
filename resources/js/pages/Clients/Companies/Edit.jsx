@@ -39,6 +39,7 @@ const ClientCompanyEdit = () => {
     tax_id: item.tax_id || '',
     vat: item.vat || '',
     clients: item.clients.map(i => i.id.toString()),
+    status_id: item.status?.id?.toString() || '',
   });
 
   return (
@@ -106,13 +107,13 @@ const ClientCompanyEdit = () => {
             label="Status"
             placeholder="Select status"
             mt="md"
-            data={[
-              { value: 'active', label: 'Active' },
-              { value: 'inactive', label: 'Inactive' },
-            ]}
-            value={form.data.status}
-            onChange={value => updateValue('status', value)}
-            error={form.errors.status}
+            data={dropdowns.statuses.map(status => ({
+              value: status.id.toString(),
+              label: status.label
+            }))}
+            value={form.data.status_id?.toString()}
+            onChange={value => updateValue('status_id', value)}
+            error={form.errors.status_id}
           />
 
           <Fieldset
