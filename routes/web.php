@@ -5,6 +5,7 @@ use App\Http\Controllers\Account\ProfileController;
 use App\Http\Controllers\Auth\FacebookSocialiteController;
 use App\Http\Controllers\Client\ClientCompanyController;
 use App\Http\Controllers\Client\ClientUserController;
+use App\Http\Controllers\Client\GoogleLeadsSyncController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DropdownValuesController;
 use App\Http\Controllers\Invoice\InvoiceTasksController;
@@ -24,12 +25,11 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
-use App\Http\Controllers\Client\GoogleLeadsSyncController;
 
 Route::post('/clients/sync-google-leads', [GoogleLeadsSyncController::class, 'sync'])
     ->middleware(['auth', 'can:create client user'])
     ->name('clients.sync.google');
-    
+
 Route::get('/auth/facebook', function () {
     try {
         $user = Socialite::driver('facebook')->stateless()->user();
