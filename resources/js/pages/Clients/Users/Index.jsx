@@ -54,6 +54,26 @@ const ClientsIndex = () => {
               Create
             </Button>
           )}
+          <Button
+            color="teal"
+            variant="light"
+            radius="xl"
+            onClick={() => {
+              if (confirm("Are you sure you want to sync Google leads?")) {
+                fetch(route("clients.sync.google"), {
+                  method: "POST",
+                  headers: {
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+                    "Accept": "application/json",
+                  },
+                }).then(() => {
+                  window.location.reload();
+                });
+              }
+            }}
+          >
+            Sync Google Leads
+          </Button>
         </Grid.Col>
       </Grid>
 
