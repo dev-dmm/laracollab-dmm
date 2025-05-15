@@ -20,7 +20,7 @@ import {
 const ClientCompanyEdit = () => {
   const {
     item,
-    dropdowns: { clients, countries, currencies, defaultCurrencyId },
+    dropdowns: { clients, countries, currencies, defaultCurrencyId, statuses },
   } = usePage().props;
   const [form, submit, updateValue] = useForm('post', route('clients.companies.update', item.id), {
     _method: 'put',
@@ -107,9 +107,9 @@ const ClientCompanyEdit = () => {
             label="Status"
             placeholder="Select status"
             mt="md"
-            data={dropdowns.statuses.map(status => ({
+            data={statuses.map(status => ({
               value: status.id.toString(),
-              label: status.label
+              label: status.label,
             }))}
             value={form.data.status_id?.toString()}
             onChange={value => updateValue('status_id', value)}
