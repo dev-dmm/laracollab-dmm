@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Actions\Client\CreateClient;
 use App\Models\ClientCompany;
 use App\Models\ClientLead;
 use App\Models\User;
@@ -34,6 +33,7 @@ class SyncGoogleSheetClients extends Command
 
         if (count($rows) < 2) {
             $this->warn('No data found in sheet.');
+
             return;
         }
 
@@ -48,6 +48,7 @@ class SyncGoogleSheetClients extends Command
             $email = $data['email'] ?? null;
             if (empty($email)) {
                 Log::warning('⛔ Missing email, skipping row');
+
                 continue;
             }
 
@@ -57,7 +58,7 @@ class SyncGoogleSheetClients extends Command
                 : null;
 
             $user = User::firstOrCreate([
-                'email' => $email
+                'email' => $email,
             ], [
                 'name' => $name,
                 'phone' => $cleanPhone,
@@ -70,6 +71,7 @@ class SyncGoogleSheetClients extends Command
 
             if (ClientLead::where('client_id', $user->id)->exists()) {
                 Log::info("🔁 Lead metadata already exists for {$email}, skipping");
+
                 continue;
             }
 

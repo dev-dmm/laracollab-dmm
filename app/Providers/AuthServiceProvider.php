@@ -3,12 +3,12 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Models\ClientCompany;
 use App\Models\User;
+use App\Policies\ClientCompanyPolicy;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
-use App\Models\ClientCompany;
-use App\Policies\ClientCompanyPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
