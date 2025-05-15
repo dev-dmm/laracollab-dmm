@@ -80,7 +80,7 @@ class SyncGoogleSheetClients extends Command
                 'metadata' => $metadata,
             ]);
 
-            $companyName = $data['poia_inai_i_onomasia_tis_epikhirisis_sas'] ?? "{$user->name}'s company";
+            $companyName = $data['poia_einai_i_onomasia_tis_epikhirisis_sas'] ?? "{$user->name}'s company";
 
             // Check if this user is already linked to a company
             $alreadyHasCompany = $user->clientCompanies()->exists();
