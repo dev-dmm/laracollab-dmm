@@ -93,10 +93,29 @@ class ClientCompanyController extends Controller
 
     public function show(ClientCompany $company)
     {
-        $company->load(['country', 'currency']);
+        $this->authorize('view', $company);
+
+        $company->load([
+            'clients',
+            'projects',
+            'projects.activities' => fn ($query) => $query->latest()->limit(10),
+            'country',
+        ]);
+
+        // Flatten all activities from projects
+        $activities = $company->projects
+            ->flatMap(fn ($project) => $project->activities)
+            ->sortByDesc('created_at')
+            ->values()
+            ->take(10); // Optional: Limit to 10 recent activities
 
         return Inertia::render('Clients/Companies/Show', [
-            'item' => new ClientCompanyResource($company),
+            'item' => $company,
+            'activities' => $activities->map(fn ($activity) => [
+                'id' => $activity->id,
+                'title' => $activity->title,
+                'created_at' => $activity->created_at,
+            ]),
         ]);
     }
 }

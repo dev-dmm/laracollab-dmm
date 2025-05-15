@@ -2,43 +2,42 @@
 
 namespace App\Http\Resources\ClientCompany;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ClientCompanyResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
-    public function toArray(Request $request): array
+    public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'email' => $this->email,
-            'address' => $this->address,
-            'postal_code' => $this->postal_code,
-            'city' => $this->city,
-            'country' => $this->whenLoaded('country', fn () => [
-                'id' => $this->country->id ?? null,
-                'name' => $this->country->name ?? null,
-            ]),
-            'currency' => $this->whenLoaded('currency', fn () => [
-                'id' => $this->currency->id ?? null,
-                'name' => $this->currency->name ?? null,
-            ]),
-            'phone' => $this->phone,
-            'web' => $this->web,
-            'iban' => $this->iban,
-            'swift' => $this->swift,
-            'business_id' => $this->business_id,
-            'tax_id' => $this->tax_id,
-            'vat' => $this->vat,
-            'rate' => $this->rate,
-            'currency' => $this->currency,
-            'clients' => $this->clients->map->only(['id', 'name']),
+            'id'           => $this->id,
+            'name'         => $this->name,
+            'email'        => $this->email,
+            'phone'        => $this->phone,
+            'address'      => $this->address,
+            'city'         => $this->city,
+            'postal_code'  => $this->postal_code,
+            'country'      => $this->whenLoaded('country'),
+            'business_id'  => $this->business_id,
+            'vat'          => $this->vat,
+            'clients'      => $this->whenLoaded('clients', fn () => $this->clients->map(fn ($client) => [
+                'id'    => $client->id,
+                'name'  => $client->name,
+                'email' => $client->email,
+                'phone' => $client->phone,
+            ]), []),
+
+            'projects'     => $this->whenLoaded('projects', fn () => $this->projects->map(fn ($project) => [
+                'id'         => $project->id,
+                'name'       => $project->name,
+                'created_at' => $project->created_at,
+            ]), []),
+
+            'activities'   => $this->whenLoaded('activities', fn () => $this->activities->map(fn ($activity) => [
+                'id'         => $activity->id,
+                'title'      => $activity->title,
+                'subtitle'   => $activity->subtitle,
+                'created_at' => $activity->created_at,
+            ]), []),
         ];
     }
 }
