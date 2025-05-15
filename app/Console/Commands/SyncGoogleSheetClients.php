@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Actions\Client\CreateClient;
 use App\Models\User;
+use App\Models\ClientLead; // new model to track dynamic lead metadata
 use Google_Client;
 use Google_Service_Sheets;
 use Illuminate\Console\Command;
@@ -14,7 +15,7 @@ class SyncGoogleSheetClients extends Command
 {
     protected $signature = 'leads:sync-google';
 
-    protected $description = 'Import leads from Google Sheet and create clients';
+    protected $description = 'Import leads from Google Sheet and create clients with dynamic metadata';
 
     public function handle()
     {
@@ -32,7 +33,6 @@ class SyncGoogleSheetClients extends Command
 
         if (count($rows) < 2) {
             $this->warn('No data found in sheet.');
-
             return;
         }
 
@@ -44,43 +44,48 @@ class SyncGoogleSheetClients extends Command
         foreach (array_slice($rows, 1) as $row) {
             $data = array_combine($headers, array_pad($row, count($headers), null));
 
-            Log::info('🧩 Sheet Row Keys', array_keys($data));
-            Log::info('📞 Raw phone input', ['raw' => $data['phone_number'] ?? 'MISSING']);
-
-            if (empty($data['email'])) {
+            $email = $data['email'] ?? null;
+            if (empty($email)) {
                 Log::warning('⛔ Missing email, skipping row');
-
                 continue;
             }
 
-            if (User::where('email', $data['email'])->exists()) {
-                Log::warning("⚠️ Duplicate skipped: {$data['email']}");
-
-                continue;
-            }
-
+            $name = $data['full_name'] ?? $data['full name'] ?? 'Sheet Lead';
             $cleanPhone = isset($data['phone_number'])
                 ? preg_replace('/^p:\s*/i', '', trim($data['phone_number']))
                 : null;
 
-            try {
-                app(CreateClient::class)->create([
-                    'name' => $data['full_name'] ?? $data['full name'] ?? 'Sheet Lead',
-                    'email' => $data['email'],
-                    'phone' => $cleanPhone,
-                    'password' => Str::random(12),
-                    'avatar' => null,
-                    'companies' => [],
-                    'send_email' => false,
-                ]);
+            // Check or create user
+            $user = User::firstOrCreate([
+                'email' => $email
+            ], [
+                'name' => $name,
+                'phone' => $cleanPhone,
+                'password' => Str::random(12),
+                'avatar' => null,
+                'job_title' => 'Client',
+            ]);
 
-                Log::info("✅ Client created: {$data['email']}");
-            } catch (\Throwable $e) {
-                Log::error('❌ Failed to create client from sheet row', [
-                    'email' => $data['email'] ?? 'unknown',
-                    'error' => $e->getMessage(),
-                ]);
+            
+            if (! $user->hasRole('client')) {
+                $user->assignRole('client');
             }
+
+            // Skip creating duplicate metadata for existing users
+            if (ClientLead::where('client_id', $user->id)->exists()) {
+                Log::info("🔁 Lead metadata already exists for {$email}, skipping");
+                continue;
+            }
+
+            // Save remaining sheet fields to metadata
+            $metadata = collect($data)->except(['email', 'full_name', 'full name', 'phone_number']);
+
+            ClientLead::create([
+                'client_id' => $user->id,
+                'metadata' => $metadata,
+            ]);
+
+            Log::info("✅ Client created and metadata saved: {$email}");
         }
 
         $this->info('✅ Sync complete.');

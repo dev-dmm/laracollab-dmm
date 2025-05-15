@@ -113,4 +113,9 @@ class User extends Authenticatable implements AuditableContract, CanResetPasswor
             ->map(fn ($i) => ['value' => (string) $i->id, 'label' => $i->name])
             ->toArray();
     }
+
+    public function clientLeads()
+    {
+        return $this->hasMany(ClientLead::class, 'client_id');
+    }
 }
