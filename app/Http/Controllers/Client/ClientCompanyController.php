@@ -15,6 +15,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\CompanyStatus;
 
 class ClientCompanyController extends Controller
 {
