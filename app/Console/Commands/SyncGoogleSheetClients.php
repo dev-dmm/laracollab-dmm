@@ -17,7 +17,7 @@ class SyncGoogleSheetClients extends Command
 
     public function handle()
     {
-        $sheetId = env('GOOGLE_SHEET_ID');
+        $sheetId = config('services.google.sheet_id');
         $range = 'Sheet1';
 
         $client = new Google_Client();
