@@ -47,7 +47,7 @@ class ClientCompanyController extends Controller
                 'clients' => User::clientDropdownValues(),
                 'countries' => Country::dropdownValues(),
                 'currencies' => Currency::dropdownValues(),
-                'statuses' => CompanyStatus::select('id', 'label')->get(),
+                'statuses' => CompanyStatus::select('id', 'name')->get(),
                 'defaultCurrencyId' => (string) $defaultCurrencyId,
             ],
         ]);
@@ -171,7 +171,7 @@ class ClientCompanyController extends Controller
         $this->authorize('viewAny', ClientCompany::class);
 
         return Inertia::render('Clients/Companies/StatusBoard', [
-            'statuses' => CompanyStatus::all(['id', 'name', 'label', 'color']),
+            'statuses' => CompanyStatus::all(['id', 'name', 'color']),
             'companies' => ClientCompanyResource::collection(
                 ClientCompany::with(['status'])->get()
             ),
