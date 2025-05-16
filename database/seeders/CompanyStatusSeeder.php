@@ -10,9 +10,9 @@ class CompanyStatusSeeder extends Seeder
     public function run(): void
     {
         CompanyStatus::insert([
-            ['name' => 'active', 'label' => 'Active', 'color' => 'green'],
-            ['name' => 'archived', 'label' => 'Archived', 'color' => 'red'],
-            ['name' => 'pending', 'label' => 'Pending', 'color' => 'yellow'],
+            ['name' => 'active', 'color' => 'green'],
+            ['name' => 'archived', 'color' => 'red'],
+            ['name' => 'pending', 'color' => 'yellow'],
         ]);
     }
 }

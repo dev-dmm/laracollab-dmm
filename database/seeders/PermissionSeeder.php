@@ -43,15 +43,18 @@ class PermissionSeeder extends Seeder
         ];
 
         foreach ($permissionIdsByRole as $role => $permissionIds) {
-            $role = Role::whereName($role)->first();
+            $roleModel = Role::whereName($role)->first();
 
-            DB::table('role_has_permissions')
-                ->insert(
-                    collect($permissionIds)->map(fn ($id) => [
-                        'role_id' => $role->id,
-                        'permission_id' => $id,
-                    ])->toArray()
-                );
+            if (! $roleModel) {
+                throw new \Exception("Role '{$role}' not found in the database. Make sure RoleSeeder runs before PermissionSeeder.");
+            }
+            DB::table('role_has_permissions')->upsert(
+                collect($permissionIds)->map(fn ($id) => [
+                    'role_id' => $roleModel->id,
+                    'permission_id' => $id,
+                ])->toArray(),
+                ['role_id', 'permission_id']
+            );
         }
 
         Artisan::call('cache:clear');

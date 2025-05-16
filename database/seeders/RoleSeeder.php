@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Role;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class RoleSeeder extends Seeder
 {
@@ -21,8 +21,10 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        foreach (self::$roles as $role) {
-            Role::create(['name' => $role]);
+        foreach (self::$roles as $roleName) {
+            Role::firstOrCreate(
+                ['name' => $roleName, 'guard_name' => 'web']
+            );
         }
     }
 }

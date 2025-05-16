@@ -119,7 +119,7 @@ export default function Sidebar() {
         icon: IconSettings,
         active: route().current("settings.*"),
         opened: route().current("settings.*"),
-        visible: can("view owner company") || can("view roles") || can("view labels"),
+        visible: can("view owner company") || can("view roles") || can("view labels") || can("view statuses"),
         links: [
           {
             label: "Εταιρεία",
@@ -138,6 +138,12 @@ export default function Sidebar() {
             link: route("settings.labels.index"),
             active: route().current("settings.labels.*"),
             visible: can("view labels"),
+          },
+          {
+            label: "Καταστάσεις",
+            link: route("settings.statuses.index"),
+            active: route().current("settings.statuses.*"),
+            visible: can("view statuses"),
           },
         ],
       },

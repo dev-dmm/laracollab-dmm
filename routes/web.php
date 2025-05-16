@@ -23,6 +23,7 @@ use App\Http\Controllers\Task\GroupController;
 use App\Http\Controllers\Task\TimeLogController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Settings\CompanyStatusController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -153,6 +154,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
         Route::resource('labels', LabelController::class)->except(['show']);
         Route::post('labels/{labelId}/restore', [LabelController::class, 'restore'])->name('labels.restore');
+
+        Route::resource('statuses', CompanyStatusController::class)->except(['show']);
+        Route::post('statuses/{statusId}/restore', [CompanyStatusController::class, 'restore'])->name('statuses.restore');
     });
 
     // Account

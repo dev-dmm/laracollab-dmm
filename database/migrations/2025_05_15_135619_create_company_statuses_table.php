@@ -13,7 +13,6 @@ return new class extends Migration
         Schema::create('company_statuses', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique(); // e.g. 'active'
-            $table->string('label');          // e.g. 'Active'
             $table->string('color')->nullable(); // optional badge color like 'green'
             $table->timestamps();
         });

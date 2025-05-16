@@ -72,10 +72,10 @@ const CompanyShow = () => {
                   <Text size="xs" c="dimmed">Active</Text>
                   <Title order={3}>{item.projects.filter(p => !p.archived_at).length}</Title>
                 </Card>
-                <Card withBorder p="md" radius="md">
+                {/* <Card withBorder p="md" radius="md">
                   <Text size="xs" c="dimmed">Archived</Text>
                   <Title order={3}>{item.projects.filter(p => p.archived_at).length}</Title>
-                </Card>
+                </Card> */}
                 <Card withBorder p="md" radius="md">
                   <Text size="xs" c="dimmed">Activities</Text>
                   <Title order={3}>{activities.length}</Title>
