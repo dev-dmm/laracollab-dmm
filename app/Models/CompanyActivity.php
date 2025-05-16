@@ -35,5 +35,4 @@ class CompanyActivity extends Model
     {
         return $this->belongsTo(CompanyStatus::class, 'new_status_id');
     }
-
 }
