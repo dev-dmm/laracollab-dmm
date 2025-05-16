@@ -14,16 +14,18 @@ return new class extends Migration
         Schema::create('company_activities', function (Blueprint $table) {
             $table->id();
             $table->foreignId('client_company_id')->constrained()->onDelete('cascade');
-            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+
+            // Add these lines
+            $table->foreignId('old_status_id')->nullable()->constrained('company_statuses')->nullOnDelete();
+            $table->foreignId('new_status_id')->nullable()->constrained('company_statuses')->nullOnDelete();
+
             $table->string('title');
             $table->text('comment')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('company_activities');

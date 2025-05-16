@@ -12,6 +12,8 @@ class CompanyActivity extends Model
         'user_id',
         'title',
         'comment',
+        'old_status_id',
+        'new_status_id',
     ];
 
     public function company(): BelongsTo
@@ -23,4 +25,15 @@ class CompanyActivity extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function old_status()
+    {
+        return $this->belongsTo(CompanyStatus::class, 'old_status_id');
+    }
+
+    public function new_status()
+    {
+        return $this->belongsTo(CompanyStatus::class, 'new_status_id');
+    }
+
 }

@@ -59,7 +59,7 @@ const CompanyShow = () => {
               <Tabs.Tab value="overview">Overview</Tabs.Tab>
               <Tabs.Tab value="projects">Projects</Tabs.Tab>
               <Tabs.Tab value="activities">Activities</Tabs.Tab>
-              <Tabs.Tab value="communication">Communication</Tabs.Tab>
+              <Tabs.Tab value="communication">Status Log</Tabs.Tab>
             </Tabs.List>
 
             <Tabs.Panel value="overview" pt="md">
@@ -114,11 +114,13 @@ const CompanyShow = () => {
                 <Text c="dimmed" fz="sm">No activity found.</Text>
               )}
 
-              <Title order={4} mt="lg" mb="sm">Recent Communication</Title>
+              <Title order={4} mt="lg" mb="sm">Recent Status Log</Title>
               {statusChanges.length ? (
                 statusChanges.map((activity, i) => (
                   <Card key={i} withBorder mb="sm">
-                    <Text>{activity.title}</Text>
+                    <Text size="sm">
+                      Status changed from {activity.old_status?.label || '—'} to {activity.new_status?.label || '—'}
+                    </Text>
                     {activity.comment && (
                       <Text c="dimmed">
                         "{activity.comment}"
@@ -170,9 +172,11 @@ const CompanyShow = () => {
               {statusChanges.length ? (
                 statusChanges.map((activity, i) => (
                   <Card key={i} withBorder mb="sm">
-                    <Text size="sm">{activity.title}</Text>
+                    <Text size="sm">
+                      Status changed from {activity.old_status?.label || '—'} to {activity.new_status?.label || '—'}
+                    </Text>
                     {activity.comment && (
-                      <Text size="xs" mt="xs" c="dimmed">
+                      <Text size="xs" c="dimmed">
                         "{activity.comment}"
                       </Text>
                     )}

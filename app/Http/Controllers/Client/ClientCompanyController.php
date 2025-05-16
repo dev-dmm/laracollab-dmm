@@ -115,10 +115,34 @@ class ClientCompanyController extends Controller
             'status',
         ]);
 
-        $statusChanges = CompanyActivity::with('user')
+        $statusChanges = CompanyActivity::with(['user', 'old_status', 'new_status'])
             ->where('client_company_id', $company->id)
             ->latest()
-            ->paginate(20); // Add `->appends(request()->query())` if needed
+            ->get();
+
+        $statusChangesTransformed = $statusChanges->map(function ($change) {
+            return [
+                'id' => $change->id,
+                'comment' => $change->comment,
+                'created_at' => $change->created_at,
+                'user' => $change->user ? [
+                    'id' => $change->user->id,
+                    'name' => $change->user->name,
+                ] : null,
+                'old_status' => $change->old_status
+                    ? [
+                        'id' => $change->old_status->id,
+                        'label' => $change->old_status->label,
+                    ]
+                    : null,
+                'new_status' => $change->new_status
+                    ? [
+                        'id' => $change->new_status->id,
+                        'label' => $change->new_status->label,
+                    ]
+                    : null,
+            ];
+        });
 
         $activities = $company->projects
             ->flatMap(fn ($project) => $project->activities)
@@ -138,16 +162,7 @@ class ClientCompanyController extends Controller
                 ] : null,
                 'created_at' => $activity->created_at,
             ]),
-            'statusChanges' => $statusChanges->map(fn ($change) => [
-                'id' => $change->id,
-                'title' => $change->title,
-                'comment' => $change->comment,
-                'created_at' => $change->created_at,
-                'user' => $change->user ? [
-                    'id' => $change->user->id,
-                    'name' => $change->user->name,
-                ] : null,
-            ]),
+            'statusChanges' => $statusChangesTransformed,
         ]);
     }
 
