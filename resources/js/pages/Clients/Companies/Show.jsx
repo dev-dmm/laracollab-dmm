@@ -4,7 +4,7 @@ import { usePage } from "@inertiajs/react";
 import Layout from "@/layouts/MainLayout";
 
 const CompanyShow = () => {
-  const { item, activities = [] } = usePage().props;
+  const { item, activities = [], statusChanges = [] } = usePage().props;
 
   return (
     <Box>
@@ -58,7 +58,8 @@ const CompanyShow = () => {
             <Tabs.List>
               <Tabs.Tab value="overview">Overview</Tabs.Tab>
               <Tabs.Tab value="projects">Projects</Tabs.Tab>
-              <Tabs.Tab value="communication">Activities</Tabs.Tab>
+              <Tabs.Tab value="activities">Activities</Tabs.Tab>
+              <Tabs.Tab value="communication">Communication</Tabs.Tab>
             </Tabs.List>
 
             <Tabs.Panel value="overview" pt="md">
@@ -89,13 +90,13 @@ const CompanyShow = () => {
                     href={route('projects.tasks', project.id)}
                     style={{ textDecoration: 'none' }}
                   >
-                  <Card key={project.id} withBorder mb="sm">
-                    <Text fw={500}>{project.name}</Text>
-                    <Text fz="xs" c="dimmed">
-                      Created at: {new Date(project.created_at).toLocaleDateString()}
-                    </Text>
-                  </Card>
-                 </Anchor>
+                    <Card key={project.id} withBorder mb="sm">
+                      <Text fw={500}>{project.name}</Text>
+                      <Text fz="xs" c="dimmed">
+                        Created at: {new Date(project.created_at).toLocaleDateString()}
+                      </Text>
+                    </Card>
+                  </Anchor>
                 ))
               ) : (
                 <Text c="dimmed" fz="sm">No projects found for this company.</Text>
@@ -106,6 +107,23 @@ const CompanyShow = () => {
                 activities.map((activity, i) => (
                   <Card key={i} withBorder mb="sm">
                     <Text>{activity.title}</Text>
+                    <Text size="xs" c="dimmed">{new Date(activity.created_at).toLocaleDateString()}</Text>
+                  </Card>
+                ))
+              ) : (
+                <Text c="dimmed" fz="sm">No activity found.</Text>
+              )}
+
+              <Title order={4} mt="lg" mb="sm">Recent Communication</Title>
+              {statusChanges.length ? (
+                statusChanges.map((activity, i) => (
+                  <Card key={i} withBorder mb="sm">
+                    <Text>{activity.title}</Text>
+                    {activity.comment && (
+                      <Text c="dimmed">
+                        "{activity.comment}"
+                      </Text>
+                    )}
                     <Text size="xs" c="dimmed">{new Date(activity.created_at).toLocaleDateString()}</Text>
                   </Card>
                 ))
@@ -135,7 +153,7 @@ const CompanyShow = () => {
               )}
             </Tabs.Panel>
 
-            <Tabs.Panel value="communication" pt="md">
+            <Tabs.Panel value="activities" pt="md">
               {activities.length ? (
                 activities.map((activity, i) => (
                   <Card key={i} withBorder mb="sm">
@@ -145,6 +163,26 @@ const CompanyShow = () => {
                 ))
               ) : (
                 <Text c="dimmed" fz="sm">No activity found.</Text>
+              )}
+            </Tabs.Panel>
+
+            <Tabs.Panel value="communication" pt="md">
+              {statusChanges.length ? (
+                statusChanges.map((activity, i) => (
+                  <Card key={i} withBorder mb="sm">
+                    <Text size="sm">{activity.title}</Text>
+                    {activity.comment && (
+                      <Text size="xs" mt="xs" c="dimmed">
+                        "{activity.comment}"
+                      </Text>
+                    )}
+                    <Text size="xs" c="dimmed">
+                      {new Date(activity.created_at).toLocaleDateString()} by {activity.user?.name || 'System'}
+                    </Text>
+                  </Card>
+                ))
+              ) : (
+                <Text c="dimmed" fz="sm">No communication found.</Text>
               )}
             </Tabs.Panel>
           </Tabs>

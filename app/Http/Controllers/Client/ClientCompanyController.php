@@ -16,6 +16,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\CompanyActivity;
 
 class ClientCompanyController extends Controller
 {
@@ -48,7 +49,6 @@ class ClientCompanyController extends Controller
                 'currencies' => Currency::dropdownValues(),
                 'statuses' => CompanyStatus::select('id', 'label')->get(),
                 'defaultCurrencyId' => (string) $defaultCurrencyId,
-                'statuses' => CompanyStatus::select('id', 'label')->get(),
             ],
         ]);
     }
@@ -62,7 +62,7 @@ class ClientCompanyController extends Controller
 
     public function edit(ClientCompany $company)
     {
-        $company->load(['status']); // ✅ Add this
+        $company->load(['status']);
 
         $defaultCurrencyId = Currency::where('code', 'EUR')->value('id');
 
@@ -115,26 +115,46 @@ class ClientCompanyController extends Controller
             'status',
         ]);
 
-        // Flatten all activities from projects
+        $statusChanges = CompanyActivity::with('user')
+            ->where('client_company_id', $company->id)
+            ->latest()
+            ->paginate(20); // Add `->appends(request()->query())` if needed
+
         $activities = $company->projects
             ->flatMap(fn ($project) => $project->activities)
             ->sortByDesc('created_at')
             ->values()
-            ->take(10); // Optional: Limit to 10 recent activities
+            ->take(10);
 
         return Inertia::render('Clients/Companies/Show', [
             'item' => $company,
             'activities' => $activities->map(fn ($activity) => [
                 'id' => $activity->id,
                 'title' => $activity->title,
+                'subtitle' => $activity->subtitle ?? null,
+                'user' => $activity->user ? [
+                    'id' => $activity->user->id,
+                    'name' => $activity->user->name,
+                ] : null,
                 'created_at' => $activity->created_at,
+            ]),
+            'statusChanges' => $statusChanges->map(fn ($change) => [
+                'id' => $change->id,
+                'title' => $change->title,
+                'comment' => $change->comment,
+                'created_at' => $change->created_at,
+                'user' => $change->user ? [
+                    'id' => $change->user->id,
+                    'name' => $change->user->name,
+                ] : null,
             ]),
         ]);
     }
 
+
     public function statusBoard()
     {
-        $this->authorize('viewAny', ClientCompany::class); // Optional extra security if using policies
+        $this->authorize('viewAny', ClientCompany::class);
 
         return Inertia::render('Clients/Companies/StatusBoard', [
             'statuses' => CompanyStatus::all(['id', 'name', 'label', 'color']),

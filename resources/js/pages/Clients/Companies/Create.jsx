@@ -125,6 +125,14 @@ const ClientCompanyCreate = () => {
             onChange={value => updateValue('status_id', value)}
             error={form.errors.status_id}
           />
+          <TextInput
+            label="Change comment"
+            placeholder="Why is the status changing?"
+            mt="md"
+            value={form.data.status_change_comment}
+            onChange={e => updateValue('status_change_comment', e.target.value)}
+            error={form.errors.status_change_comment}
+          />
 
           <Fieldset
             legend='Location'

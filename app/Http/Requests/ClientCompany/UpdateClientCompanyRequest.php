@@ -38,6 +38,7 @@ class UpdateClientCompanyRequest extends FormRequest
             'vat' => 'string|nullable',
             'clients' => 'array|nullable',
             'status_id' => ['required', 'exists:company_statuses,id'],
+            'status_change_comment' => 'nullable|string|max:255',
         ];
     }
 }

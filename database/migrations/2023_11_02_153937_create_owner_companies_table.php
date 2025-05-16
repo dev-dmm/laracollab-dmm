@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('owner_company', function (Blueprint $table) {
+        Schema::create('owner_companies', function (Blueprint $table) {
             $table->id();
             $table->foreignId('country_id')->nullable();
             $table->foreignId('currency_id')->nullable();
