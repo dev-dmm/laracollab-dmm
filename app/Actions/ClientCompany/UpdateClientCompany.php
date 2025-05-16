@@ -3,9 +3,8 @@
 namespace App\Actions\ClientCompany;
 
 use App\Models\ClientCompany;
-use App\Models\CompanyStatus;
-use Illuminate\Support\Facades\Auth;
 use App\Models\CompanyActivity;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateClientCompany
 {
