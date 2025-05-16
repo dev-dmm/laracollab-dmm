@@ -116,6 +116,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
         Route::get('companies/{company}', [ClientCompanyController::class, 'show'])->name('companies.show');
         Route::get('clients/companies/{company}', [ClientCompanyController::class, 'show'])->name('clients.companies.show');
+
+        Route::get('companies-board', [ClientCompanyController::class, 'statusBoard'])
+        ->middleware('can:viewAny,App\Models\ClientCompany') // restrict to admins
+        ->name('companies.board');
+
     });
 
     // Users

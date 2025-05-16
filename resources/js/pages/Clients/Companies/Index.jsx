@@ -65,6 +65,14 @@ const ClientCompaniesIndex = () => {
               Create
             </Button>
           )}
+
+          <Button
+            variant="outline"
+            radius="xl"
+            onClick={() => window.location.href = '/clients/companies-board'}
+          >
+            Status Board
+          </Button> 
         </Grid.Col>
       </Grid>
 

@@ -131,4 +131,16 @@ class ClientCompanyController extends Controller
             ]),
         ]);
     }
+
+    public function statusBoard()
+    {
+        $this->authorize('viewAny', ClientCompany::class); // Optional extra security if using policies
+
+        return Inertia::render('Clients/Companies/StatusBoard', [
+            'statuses' => CompanyStatus::all(['id', 'name', 'label', 'color']),
+            'companies' => ClientCompanyResource::collection(
+                ClientCompany::with(['status'])->get()
+            ),
+        ]);
+    }
 }
