@@ -3,9 +3,9 @@
 namespace App\Actions\ClientCompany;
 
 use App\Models\ClientCompany;
+use App\Models\CompanyActivity;
 use App\Models\CompanyStatus;
 use Illuminate\Support\Facades\Auth;
-use App\Models\CompanyActivity;
 
 class UpdateClientCompany
 {
@@ -20,7 +20,7 @@ class UpdateClientCompany
             CompanyActivity::create([
                 'client_company_id' => $clientCompany->id,
                 'user_id' => Auth::id(),
-                'title' => 'Status changed to ' . CompanyStatus::find($data['status_id'])->label,
+                'title' => 'Status changed to '.CompanyStatus::find($data['status_id'])->label,
                 'comment' => $data['status_change_comment'] ?? null,
             ]);
         }
