@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use LaravelArchivable\Archivable;
 use Lacodix\LaravelModelFilter\Traits\IsSearchable;
 use Lacodix\LaravelModelFilter\Traits\IsSortable;
+use LaravelArchivable\Archivable;
 
 class CompanyStatus extends Model
 {
@@ -14,6 +14,7 @@ class CompanyStatus extends Model
     protected $fillable = ['name', 'label', 'color'];
 
     protected $searchable = ['name'];
+
     protected $sortable = ['name', 'label', 'color'];
 
     public function companies()

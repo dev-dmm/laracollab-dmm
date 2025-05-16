@@ -19,4 +19,3 @@ class StoreStatusRequest extends FormRequest
         ];
     }
 }
-
