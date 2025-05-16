@@ -119,12 +119,13 @@ const ClientCompanyCreate = () => {
             mt="md"
             data={statuses.map(status => ({
               value: status.id.toString(),
-              label: status.label,
+              label: status.name,
             }))}
             value={form.data.status_id?.toString()}
             onChange={value => updateValue('status_id', value)}
             error={form.errors.status_id}
           />
+
           <TextInput
             label="Change comment"
             placeholder="Why is the status changing?"

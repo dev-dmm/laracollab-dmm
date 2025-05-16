@@ -31,7 +31,7 @@ export default function TableRow({ item }) {
       <Table.Td>
         {item.status ? (
           <Badge variant="light" color={item.status.color || "gray"} tt="unset">
-            {item.status.label}
+            {item.status.name}
           </Badge>
         ) : (
           <Badge variant="light" color="gray">Unknown</Badge>

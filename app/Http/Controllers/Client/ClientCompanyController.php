@@ -72,7 +72,7 @@ class ClientCompanyController extends Controller
                 'clients' => User::clientDropdownValues(),
                 'countries' => Country::dropdownValues(),
                 'currencies' => Currency::dropdownValues(),
-                'statuses' => CompanyStatus::select('id', 'label')->get(),
+                'statuses' => CompanyStatus::select('id', 'name')->get(),
                 'defaultCurrencyId' => (string) $defaultCurrencyId,
             ],
         ]);
@@ -132,13 +132,13 @@ class ClientCompanyController extends Controller
                 'old_status' => $change->old_status
                     ? [
                         'id' => $change->old_status->id,
-                        'label' => $change->old_status->label,
+                        'name' => $change->old_status->name,
                     ]
                     : null,
                 'new_status' => $change->new_status
                     ? [
                         'id' => $change->new_status->id,
-                        'label' => $change->new_status->label,
+                        'name' => $change->new_status->name,
                     ]
                     : null,
             ];
