@@ -38,7 +38,7 @@ class UpdateClientCompany
                     'model' => 'phi-3.1-mini-128k-instruct',
                     'messages' => [
                         ['role' => 'system', 'content' => 'Be concise, friendly and speak as a polite assistant.'],
-                        ['role' => 'user', 'content' => "Send a message to '{$name}' saying their status changed to '{$newStatusName}'."]
+                        ['role' => 'user', 'content' => "Send a message to '{$name}' saying their status changed to '{$newStatusName}'."],
                     ],
                     'temperature' => 0.7,
                     'max_tokens' => 200,
@@ -48,9 +48,9 @@ class UpdateClientCompany
                 $json = $response->json();
                 $aiMessage = $json['choices'][0]['message']['content'] ?? null;
 
-                Log::info('[LMStudio] AI Message: ' . $aiMessage);
+                Log::info('[LMStudio] AI Message: '.$aiMessage);
             } catch (\Exception $e) {
-                Log::error('[LMStudio] ERROR: ' . $e->getMessage());
+                Log::error('[LMStudio] ERROR: '.$e->getMessage());
             }
 
             CompanyActivity::create([
@@ -71,5 +71,4 @@ class UpdateClientCompany
 
         return $updated;
     }
-
 }
