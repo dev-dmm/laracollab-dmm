@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
+use App\Models\ClientCompany;
+use App\Observers\ClientCompanyObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,5 +33,7 @@ class AppServiceProvider extends ServiceProvider
                 }
             );
         }
+
+        ClientCompany::observe(ClientCompanyObserver::class);
     }
 }

@@ -21,7 +21,7 @@ const CompanyShow = () => {
           <Group justify="space-between" mb="xs">
             <Title order={3}>{item.name}</Title>
             <Badge color={item.status?.color || 'gray'} variant="light">
-              {item.status?.label || 'Unknown'}
+              {item.status?.name || 'Unknown'}
             </Badge>
           </Group>
 

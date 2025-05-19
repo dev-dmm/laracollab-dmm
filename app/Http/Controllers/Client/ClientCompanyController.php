@@ -133,12 +133,16 @@ class ClientCompanyController extends Controller
                     ? [
                         'id' => $change->old_status->id,
                         'name' => $change->old_status->name,
+                        'label' => $change->old_status->name, // Add this line
+                        'color' => $change->old_status->color ?? 'gray', // Add this line
                     ]
                     : null,
                 'new_status' => $change->new_status
                     ? [
                         'id' => $change->new_status->id,
                         'name' => $change->new_status->name,
+                        'label' => $change->new_status->name, // Add this line
+                        'color' => $change->new_status->color ?? 'gray', // Add this line
                     ]
                     : null,
             ];
