@@ -17,6 +17,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Http\Resources\Status\CompanyStatusResource;
 
 class ClientCompanyController extends Controller
 {
@@ -175,7 +176,7 @@ class ClientCompanyController extends Controller
         $this->authorize('viewAny', ClientCompany::class);
 
         return Inertia::render('Clients/Companies/StatusBoard', [
-            'statuses' => CompanyStatus::all(['id', 'name', 'color']),
+            'statuses' => CompanyStatusResource::collection(CompanyStatus::all()),
             'companies' => ClientCompanyResource::collection(
                 ClientCompany::with(['status'])->get()
             ),

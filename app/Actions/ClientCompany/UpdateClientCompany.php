@@ -7,6 +7,7 @@ use App\Models\CompanyActivity;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Twilio\Rest\Client as TwilioClient;
 
 class UpdateClientCompany
 {
@@ -67,6 +68,25 @@ class UpdateClientCompany
                 'old_status_id' => $originalStatus,
                 'new_status_id' => $data['status_id'],
             ]);
+
+            // ✅ If new status name is 'sms', send SMS to fixed number
+            if (optional($clientCompany->status)->name === 'sms') {
+                try {
+                    $twilio = new TwilioClient(
+                        config('services.twilio.sid'),
+                        config('services.twilio.token')
+                    );
+
+                    $twilio->messages->create('+306946051659', [
+                        'messagingServiceSid' => config('services.twilio.messaging_service_sid'),
+                        'body' => $aiMessage ?? 'Your company status has been updated.'
+                    ]);
+
+                    Log::info('[Twilio] SMS sent to +306946051659');
+                } catch (\Exception $e) {
+                    Log::error('[Twilio] Failed to send SMS: ' . $e->getMessage());
+                }
+            }
         }
 
         return $updated;
