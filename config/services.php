@@ -43,8 +43,8 @@ return [
         'redirect' => env('FACEBOOK_REDIRECT_URI'),
     ],
     'twilio' => [
-    'sid' => env('TWILIO_SID'),
-    'token' => env('TWILIO_AUTH_TOKEN'),
-    'from' => env('TWILIO_FROM'),
+        'sid' => env('TWILIO_SID'),
+        'token' => env('TWILIO_AUTH_TOKEN'),
+        'from' => env('TWILIO_FROM'),
     ],
 ];

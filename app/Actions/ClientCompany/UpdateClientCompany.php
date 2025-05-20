@@ -79,12 +79,12 @@ class UpdateClientCompany
 
                     $twilio->messages->create('+306946051659', [
                         'messagingServiceSid' => config('services.twilio.messaging_service_sid'),
-                        'body' => $aiMessage ?? 'Your company status has been updated.'
+                        'body' => $aiMessage ?? 'Your company status has been updated.',
                     ]);
 
                     Log::info('[Twilio] SMS sent to +306946051659');
                 } catch (\Exception $e) {
-                    Log::error('[Twilio] Failed to send SMS: ' . $e->getMessage());
+                    Log::error('[Twilio] Failed to send SMS: '.$e->getMessage());
                 }
             }
         }
