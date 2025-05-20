@@ -86,6 +86,24 @@ class ClientCompanyController extends Controller
         return redirect()->route('clients.companies.index')->success('Company updated', 'The company was successfully updated.');
     }
 
+    public function updateStatus(ClientCompany $company, Request $request)
+    {
+        $this->authorize('update', $company);
+        
+        $validated = $request->validate([
+            'status_id' => ['required', 'exists:company_statuses,id'],
+            'status_change_comment' => ['nullable', 'string', 'max:255']
+        ]);
+
+        (new UpdateClientCompany)->update($company, $validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Status updated successfully',
+            'company' => new ClientCompanyResource($company->fresh())
+        ]);
+    }
+
     public function destroy(ClientCompany $company)
     {
         $company->archive();

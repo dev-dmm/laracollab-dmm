@@ -112,8 +112,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::resource('users', ClientUserController::class)->except(['show']);
         Route::post('users/{userId}/restore', [ClientUserController::class, 'restore'])->name('users.restore');
 
+        // Client Companies
         Route::resource('companies', ClientCompanyController::class)->except(['show']);
         Route::post('companies/{companyId}/restore', [ClientCompanyController::class, 'restore'])->name('companies.restore');
+        Route::post('companies/{company}/status', [ClientCompanyController::class, 'updateStatus'])->name('companies.status.update');
 
         Route::get('companies/{company}', [ClientCompanyController::class, 'show'])->name('companies.show');
         Route::get('clients/companies/{company}', [ClientCompanyController::class, 'show'])->name('clients.companies.show');
