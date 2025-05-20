@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\ClientCompany;
+use App\Observers\ClientCompanyObserver;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
-use App\Models\ClientCompany;
-use App\Observers\ClientCompanyObserver;
 
 class AppServiceProvider extends ServiceProvider
 {

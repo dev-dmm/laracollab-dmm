@@ -29,7 +29,7 @@ class CreateClientCompany
                         'model' => 'phi-3.1-mini-128k-instruct',
                         'messages' => [
                             ['role' => 'system', 'content' => 'Be concise and friendly.'],
-                            ['role' => 'user', 'content' => "Send a message to '{$clientCompany->name}' saying their status is '{$statusName}'."]
+                            ['role' => 'user', 'content' => "Send a message to '{$clientCompany->name}' saying their status is '{$statusName}'."],
                         ],
                         'temperature' => 0.7,
                         'max_tokens' => 200,
@@ -39,9 +39,9 @@ class CreateClientCompany
                     $json = $response->json();
                     $aiMessage = $json['choices'][0]['message']['content'] ?? null;
 
-                    Log::info('[LMStudio] AI on create: ' . $aiMessage);
+                    Log::info('[LMStudio] AI on create: '.$aiMessage);
                 } catch (\Exception $e) {
-                    Log::error('[LMStudio] ERROR on create: ' . $e->getMessage());
+                    Log::error('[LMStudio] ERROR on create: '.$e->getMessage());
                 }
 
                 CompanyActivity::create([
