@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Services;
 
@@ -22,10 +22,12 @@ class AiMessageService
             ]);
 
             $json = $response->json();
+
             return $json['choices'][0]['message']['content'] ?? "Hello {$companyName}, your status is now 'contacted'.";
 
         } catch (\Throwable $e) {
-            Log::error('[AI Message Error] ' . $e->getMessage());
+            Log::error('[AI Message Error] '.$e->getMessage());
+
             return "Hello {$companyName}, your status is now 'contacted'.";
         }
     }

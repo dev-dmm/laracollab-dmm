@@ -2,17 +2,17 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
+use App\Jobs\SendSmsToClient;
 use App\Models\ClientCompany;
 use App\Models\CompanyStatus;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
 use App\Services\AiMessageService;
-use App\Jobs\SendSmsToClient;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class ProcessNewLeads extends Command
 {
     protected $signature = 'leads:process-new';
+
     protected $description = 'Convert new_lead companies to contacted after 10 minutes';
 
     public function handle()
@@ -22,10 +22,11 @@ class ProcessNewLeads extends Command
 
         if (! $newLeadStatusId || ! $contactedStatusId) {
             $this->error('❌ Statuses not found.');
+
             return Command::FAILURE;
         }
 
-        $ai = new AiMessageService();
+        $ai = new AiMessageService;
 
         $companies = ClientCompany::where('status_id', $newLeadStatusId)
             ->where('created_at', '<=', now()->subMinutes(10))
@@ -48,5 +49,4 @@ class ProcessNewLeads extends Command
 
         return Command::SUCCESS;
     }
-
 }
