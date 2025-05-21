@@ -18,6 +18,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('user:prune-notifications')->dailyAt('03:05');
 
         $schedule->command('leads:sync-google')->everyTenMinutes();
+
+        $schedule->command('leads:process-new')->everyFiveMinutes();
+
     }
 
     /**

@@ -84,12 +84,14 @@ class SyncGoogleSheetClients extends Command
 
             $companyName = $data['poia_einai_i_onomasia_tis_epikhirisis_sas'] ?? "{$user->name}'s company";
 
-            // Check if this user is already linked to a company
             $alreadyHasCompany = $user->clientCompanies()->exists();
 
             if (! $alreadyHasCompany) {
+                $newLeadStatusId = \App\Models\CompanyStatus::where('name', 'new_lead')->value('id');
+
                 $company = ClientCompany::create([
                     'name' => $companyName,
+                    'status_id' => $newLeadStatusId,
                 ]);
 
                 $company->clients()->attach($user->id);

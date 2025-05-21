@@ -9,10 +9,19 @@ class CompanyStatusSeeder extends Seeder
 {
     public function run(): void
     {
-        CompanyStatus::insert([
-            ['name' => 'active', 'color' => 'green'],
-            ['name' => 'archived', 'color' => 'red'],
-            ['name' => 'pending', 'color' => 'yellow'],
-        ]);
+        $statuses = [
+            ['name' => 'new_lead', 'color' => '#1E90FF'],
+            ['name' => 'contacted', 'color' => '#20B2AA'],
+            ['name' => 'active', 'color' => '#008000'],
+            ['name' => 'pending', 'color' => '#FFFF00'],
+            ['name' => 'archived', 'color' => '#FF0000'],
+        ];
+
+        foreach ($statuses as $status) {
+            CompanyStatus::updateOrInsert(
+                ['name' => $status['name']],
+                ['color' => $status['color']]
+            );
+        }
     }
 }
