@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Models\ClientCompany;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;

@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use Twilio\Rest\Client;
 use Illuminate\Support\Facades\Log;
+use Twilio\Rest\Client;
 
 class SmsService
 {
@@ -25,9 +25,11 @@ class SmsService
                 'body' => $message,
             ]);
             Log::info("📤 SMS sent to {$to}: {$message}");
+
             return true;
         } catch (\Throwable $e) {
             Log::error("❌ SMS failed to {$to}: {$e->getMessage()}");
+
             return false;
         }
     }
