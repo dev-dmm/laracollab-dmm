@@ -2,17 +2,17 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
+use App\Jobs\SendSmsToClient;
 use App\Models\ClientCompany;
 use App\Models\CompanyStatus;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
 use App\Services\AiMessageService;
-use App\Jobs\SendSmsToClient;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class ProcessNewLeads extends Command
 {
     protected $signature = 'leads:process-new';
+
     protected $description = 'Convert new_lead companies to contacted after 10 minutes';
 
     public function handle()
@@ -27,6 +27,7 @@ class ProcessNewLeads extends Command
         if (! $newLeadStatusId || ! $contactedStatusId) {
             Log::error('❌ Could not find new_lead or contacted status IDs.');
             $this->error('Status error.');
+
             return Command::FAILURE;
         }
 
@@ -36,7 +37,7 @@ class ProcessNewLeads extends Command
 
         Log::info("📦 Found {$companies->count()} companies to process");
 
-        $ai = new AiMessageService();
+        $ai = new AiMessageService;
 
         foreach ($companies as $company) {
             Log::info("🛠️ Processing company #{$company->id} ({$company->name})");
@@ -48,6 +49,7 @@ class ProcessNewLeads extends Command
 
             if (! $owner) {
                 Log::warning("⚠️ No client attached to company {$company->id}");
+
                 continue;
             }
 
@@ -55,6 +57,7 @@ class ProcessNewLeads extends Command
 
             if (! $owner->phone) {
                 Log::warning("⚠️ No phone number for user {$owner->id}");
+
                 continue;
             }
 
@@ -65,12 +68,12 @@ class ProcessNewLeads extends Command
                 SendSmsToClient::dispatch($owner->phone, $message);
                 Log::info("📨 SMS job dispatched to {$owner->phone}");
             } catch (\Throwable $e) {
-                Log::error("❌ Failed to dispatch SMS job: " . $e->getMessage());
+                Log::error('❌ Failed to dispatch SMS job: '.$e->getMessage());
             }
         }
 
         Log::info('✅ leads:process-new command complete');
+
         return Command::SUCCESS;
     }
-
 }

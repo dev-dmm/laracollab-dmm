@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Services;
 
@@ -15,11 +15,11 @@ class AiMessageService
                 'messages' => [
                     [
                         'role' => 'system',
-                        'content' => 'You are a friendly assistant creating SMS updates.'
+                        'content' => 'You are a friendly assistant creating SMS updates.',
                     ],
                     [
                         'role' => 'user',
-                        'content' => "Write a polite, friendly SMS under 70 characters for '{$companyName}' saying their status is now 'contacted'."
+                        'content' => "Write a polite, friendly SMS under 70 characters for '{$companyName}' saying their status is now 'contacted'.",
                     ],
                 ],
                 'temperature' => 0.5,
@@ -28,10 +28,12 @@ class AiMessageService
             ]);
 
             $json = $response->json();
+
             return $json['choices'][0]['message']['content'] ?? "Hi {$companyName}, you're now marked as contacted.";
 
         } catch (\Throwable $e) {
-            Log::error('[AI Message Error] ' . $e->getMessage());
+            Log::error('[AI Message Error] '.$e->getMessage());
+
             return "Hi {$companyName}, you're now marked as contacted.";
         }
     }
