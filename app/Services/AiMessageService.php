@@ -13,20 +13,26 @@ class AiMessageService
             $response = Http::post('http://127.0.0.1:1234/v1/chat/completions', [
                 'model' => 'phi-3.1-mini-128k-instruct',
                 'messages' => [
-                    ['role' => 'system', 'content' => 'You are a friendly assistant sending updates to company owners.'],
-                    ['role' => 'user', 'content' => "Write a short, polite message to '{$companyName}' confirming we received their application and have updated their status to contacted."],
+                    [
+                        'role' => 'system',
+                        'content' => 'You are a friendly assistant creating SMS updates.'
+                    ],
+                    [
+                        'role' => 'user',
+                        'content' => "Write a polite, friendly SMS under 70 characters for '{$companyName}' saying their status is now 'contacted'."
+                    ],
                 ],
-                'temperature' => 0.7,
-                'max_tokens' => 100,
+                'temperature' => 0.5,
+                'max_tokens' => 70,
                 'stream' => false,
             ]);
 
             $json = $response->json();
-            return $json['choices'][0]['message']['content'] ?? "Hello {$companyName}, your status is now 'contacted'.";
+            return $json['choices'][0]['message']['content'] ?? "Hi {$companyName}, you're now marked as contacted.";
 
         } catch (\Throwable $e) {
             Log::error('[AI Message Error] ' . $e->getMessage());
-            return "Hello {$companyName}, your status is now 'contacted'.";
+            return "Hi {$companyName}, you're now marked as contacted.";
         }
     }
 }

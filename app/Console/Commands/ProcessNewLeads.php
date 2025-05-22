@@ -17,35 +17,59 @@ class ProcessNewLeads extends Command
 
     public function handle()
     {
+        Log::info('🟡 Starting leads:process-new command');
+
         $newLeadStatusId = CompanyStatus::where('name', 'new_lead')->value('id');
         $contactedStatusId = CompanyStatus::where('name', 'contacted')->value('id');
 
+        Log::info("🔎 Status IDs → new_lead: {$newLeadStatusId}, contacted: {$contactedStatusId}");
+
         if (! $newLeadStatusId || ! $contactedStatusId) {
-            $this->error('❌ Statuses not found.');
+            Log::error('❌ Could not find new_lead or contacted status IDs.');
+            $this->error('Status error.');
             return Command::FAILURE;
         }
-
-        $ai = new AiMessageService();
 
         $companies = ClientCompany::where('status_id', $newLeadStatusId)
             ->where('created_at', '<=', now()->subMinutes(10))
             ->get();
 
-        foreach ($companies as $company) {
-            $company->update(['status_id' => $contactedStatusId]);
+        Log::info("📦 Found {$companies->count()} companies to process");
 
-            $message = $ai->generateContactedMessage($company->name);
+        $ai = new AiMessageService();
+
+        foreach ($companies as $company) {
+            Log::info("🛠️ Processing company #{$company->id} ({$company->name})");
+
+            $company->update(['status_id' => $contactedStatusId]);
+            Log::info("✅ Updated status to 'contacted'");
+
             $owner = $company->clients()->first();
 
-            if ($owner && $owner->phone) {
-                SendSmsToClient::dispatch($owner->phone, $message);
-            } else {
-                Log::warning("⚠️ No phone for owner of company {$company->name}");
+            if (! $owner) {
+                Log::warning("⚠️ No client attached to company {$company->id}");
+                continue;
             }
 
-            Log::info("✅ Updated {$company->name} and dispatched SMS job.");
+            Log::info("📱 Owner found: {$owner->name} - {$owner->phone}");
+
+            if (! $owner->phone) {
+                Log::warning("⚠️ No phone number for user {$owner->id}");
+                continue;
+            }
+
+            $message = $ai->generateContactedMessage($company->name);
+            Log::info("💬 AI message: {$message}");
+
+            try {
+                SendSmsToClient::dispatch($owner->phone, $message);
+                Log::info("📨 SMS job dispatched to {$owner->phone}");
+            } catch (\Throwable $e) {
+                Log::error("❌ Failed to dispatch SMS job: " . $e->getMessage());
+            }
         }
 
+        Log::info('✅ leads:process-new command complete');
         return Command::SUCCESS;
     }
 
