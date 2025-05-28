@@ -1,5 +1,7 @@
 <?php
+
 // app/Events/Task/TaskCompleted.php
+
 namespace App\Events\Task;
 
 use App\Models\Task;

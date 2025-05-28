@@ -1,5 +1,7 @@
 <?php
+
 // app/Notifications/TaskCompletedNotification.php
+
 namespace App\Notifications;
 
 use App\Models\Task;

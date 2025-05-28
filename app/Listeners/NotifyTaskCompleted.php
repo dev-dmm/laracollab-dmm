@@ -1,5 +1,7 @@
 <?php
+
 // app/Listeners/NotifyTaskCompleted.php
+
 namespace App\Listeners;
 
 use App\Events\Task\TaskCompleted;

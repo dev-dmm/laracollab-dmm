@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use App\Events\Task\CommentCreated;
+use App\Events\Task\TaskCompleted;
 use App\Events\Task\TaskCreated;
 use App\Events\UserCreated;
 use App\Listeners\FacebookLeadReceived;
+use App\Listeners\NotifyTaskCompleted;
 use App\Listeners\NotifyTaskSubscribers;
 use App\Listeners\SendEmailWithCredentials;
 use App\Models\Comment;
@@ -17,8 +19,6 @@ use App\Observers\TaskObserver;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 use Marshmallow\FacebookWebhook\Events\WebhookReceived;
-use App\Events\Task\TaskCompleted;
-use App\Listeners\NotifyTaskCompleted;
 
 class EventServiceProvider extends ServiceProvider
 {

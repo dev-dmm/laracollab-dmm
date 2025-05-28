@@ -2,8 +2,8 @@
 
 namespace App\Observers;
 
-use App\Models\Task;
 use App\Events\Task\TaskCompleted;
+use App\Models\Task;
 
 class TaskObserver
 {
