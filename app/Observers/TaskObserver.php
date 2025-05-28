@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Task;
+use App\Events\Task\TaskCompleted;
 
 class TaskObserver
 {
@@ -83,6 +84,9 @@ class TaskObserver
                 'title' => $task->completed_at ? 'Task was completed' : 'Task was set to uncompleted',
                 'subtitle' => "\"{$task->name}\" was set as ".($task->completed_at ? 'completed' : 'uncompleted').' by '.auth()->user()->name,
             ]);
+        }
+        if ($task->isDirty('completed_at') && $task->completed_at !== null) {
+            event(new TaskCompleted($task));
         }
     }
 
